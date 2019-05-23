@@ -16,13 +16,6 @@ class UserSerializer(serializers.ModelSerializer):
     def get_create_date(obj):
         return obj.date_joined.replace(tzinfo=None)
 
-    def create(self, validated_data):
-        user = User.objects.create(username=validated_data['username'])
-        user.set_password(validated_data['password'])
-        user.save()
-
-        return user
-
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
