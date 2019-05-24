@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 
 class Post(models.Model):
@@ -7,7 +7,7 @@ class Post(models.Model):
     markdown = models.TextField()
     parsed_markdown = models.TextField(blank=True)
     lang = models.CharField(choices=[('en', 'english'), ('ru', 'russian')], default='ru', max_length=100)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(auto_now_add=True)
 
