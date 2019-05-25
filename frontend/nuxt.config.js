@@ -21,8 +21,17 @@ module.exports = {
     
     // Скрипты исполняемые перед началом работы SPA
     plugins: [
-        '~/plugins/global-components.js'
+        '~/plugins/global-components.js',
     ],
+    
+    axios: {
+        baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/v1/' : '/api/v1/',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+    },
     
     //Подключаемые библиотеке в виде модуля, с доступом через $
     modules: [
@@ -50,6 +59,10 @@ module.exports = {
                 })
             }
         }
-    }
+    },
+    
+    env: {
+        baseUrl: '',
+    },
 }
 

@@ -32,6 +32,10 @@
         margin-top: 20px
 
 
+    .title
+        margin-bottom: 5px
+
+
     input
         height: 22px
         width: 100%

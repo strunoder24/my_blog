@@ -15,6 +15,7 @@
         font-size: 14px
 
         &:hover
-            transition: background-color linear .2s
-            background-color: gray
+            transition: background-color linear .2s, color linear .2s
+            background-color: #000
+            color: #fff
 </style>

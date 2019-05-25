@@ -23,7 +23,7 @@
 
         methods: {
             submit(){
-                this.$nuxt.post('', {
+                this.$axios.post('/signin/', {
                     username: this.username,
                     password: this.password
                 })
