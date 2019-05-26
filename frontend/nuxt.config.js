@@ -30,12 +30,13 @@ module.exports = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
-        withCredentials: true,
+        credentials: true,
     },
     
     //Подключаемые библиотеке в виде модуля, с доступом через $
     modules: [
-        '@nuxtjs/axios'
+        '@nuxtjs/axios',
+        'cookie-universal-nuxt',
     ],
     
     /*

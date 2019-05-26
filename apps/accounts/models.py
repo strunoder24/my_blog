@@ -37,6 +37,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = models.CharField(max_length=60, blank=True)
     email = models.EmailField(unique=True)
+    last_seen = models.DateTimeField('Дата последнего появления на сайте', null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

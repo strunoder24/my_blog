@@ -3,8 +3,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login, logout
 from apps.api.models import Post
 import apps.api.permissions as localPermissions
 
@@ -13,13 +15,40 @@ from apps.helpers.viewsets_methods import Destroy
 
 from apps.api.serializers import UserSerializer
 from apps.api.serializers import PostSerializer
-# from apps.api.permissions import IsOwnerOrReadOnly
 
 
-@api_view(['GET'])
-def user_info(request, format=None):
-    if request.method == 'GET':
-        serializer = UserSerializer(request.user)
+class LoginView(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def post(self, request, format=None):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                serializer = UserSerializer(instance=user)
+                return Response(data=serializer.data, status=status.HTTP_200_OK)
+        return Response(data={'error': 'Логин или пароль указаны неверно'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LogoutView(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def post(self, request):
+        user = request.user
+        logout(request)
+        return Response(status=status.HTTP_200_OK)
+
+
+class UserInfo(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
         return Response(serializer.data)
 
 

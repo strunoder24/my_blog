@@ -6,9 +6,17 @@
         <InputComponent v-model="password" :type="'password'">
             Пароль:
         </InputComponent>
-        <SimpleButton @click="submit" style="margin-top: auto; margin-left: auto;">
-            Войти
-        </SimpleButton>
+        <div class="buttons">
+            <SimpleButton @click="submit">
+                Войти
+            </SimpleButton>
+            <SimpleButton @click="getUserInfo">
+                Юзер
+            </SimpleButton>
+            <SimpleButton @click="logout" style="margin-top: 10px;">
+                Выйти
+            </SimpleButton>
+        </div>
     </section>
 </template>
 
@@ -28,7 +36,36 @@
                     password: this.password
                 })
                     .then(r => {
-                        console.log(r);
+                        console.log(r.data);
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    })
+            },
+
+            logout(){
+                this.$axios.post('/logout/', {})
+                    .then(r => {
+                        console.log(r.data);
+                    })
+                    .catch(e => {
+                        console.log(e.response);
+                    })
+            },
+
+            getUserInfo(){
+                let config = {
+                    headers: {
+                        'X-CSRFTOKEN': this.$cookies.get('csrftoken'),
+                    }
+                };
+
+                this.$axios.get('/user-info/', config)
+                    .then(r => {
+                        console.log(r.data);
+                    })
+                    .catch(e => {
+                        console.log(e.response);
                     })
             }
         },
@@ -36,6 +73,13 @@
 </script>
 
 <style lang="sass" scoped>
+    .buttons
+        display: flex
+        justify-content: space-between
+        flex-wrap: wrap
+        padding-top: 100px
+
+
     .container
         display: flex
         flex-direction: column
