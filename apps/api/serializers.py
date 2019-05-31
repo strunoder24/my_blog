@@ -12,11 +12,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'user_permissions', 'create_date', 'is_superuser',
                   'first_name', 'last_name', 'is_active', 'is_staff')
 
-    # def validate(self, email):
-        # if get_user_model().objects.filter(email__iexact=email).exists():
-        #     raise serializers.ValidationError('Пользователь с таким email уже зарегистрирован на сайте')
-        # return email
-
     @staticmethod
     def get_create_date(obj):
         return obj.date_joined.replace(tzinfo=None)
@@ -30,4 +25,5 @@ class UserSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ('markdown', 'title', 'lang', 'author', 'create_date', 'edit_date')
+        fields = '__all__'
+        read_only_fields = ('author', 'create_date', 'edit_date', 'likes')

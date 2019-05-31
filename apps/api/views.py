@@ -5,6 +5,7 @@ from rest_framework import permissions
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
 
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from apps.api.models import Post
@@ -70,3 +71,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
