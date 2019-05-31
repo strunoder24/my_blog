@@ -1,11 +1,11 @@
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
+from rest_framework.reverse import reverse
 from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import action
 
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from apps.api.models import Post
@@ -16,6 +16,14 @@ from apps.helpers.viewsets_methods import Destroy
 
 from apps.api.serializers import UserSerializer
 from apps.api.serializers import PostSerializer
+
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'users': reverse('users-list', request=request, format=format),
+        'posts': reverse('posts-list', request=request, format=format)
+    })
 
 
 class LoginView(APIView):

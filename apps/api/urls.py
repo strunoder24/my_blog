@@ -3,13 +3,14 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from . import views
 
 urlpatterns = [
+    path('', views.api_root),
     path('signup/', views.UserViewSet.as_view({'post': 'create'})),
     path('logout/', views.LogoutView.as_view()),
     path('signin/', views.LoginView.as_view()),
-    path('user-info/', views.UserInfo.as_view()),
-    path('users/', views.UserViewSet.as_view({'get': 'list', 'delete': 'destroy'})),
-    path('users/<int:pk>/', views.UserViewSet.as_view({'get': 'retrieve', 'delete': 'destroy'})),
-    path('posts/', views.PostViewSet.as_view({'get': 'list', 'post': 'create'})),
+    path('user-info/', views.UserInfo.as_view(), name='user-info'),
+    path('users/', views.UserViewSet.as_view({'get': 'list', 'delete': 'destroy'}), name='users-list'),
+    path('users/<int:pk>/', views.UserViewSet.as_view({'get': 'retrieve', 'delete': 'destroy'}), name='user-detail'),
+    path('posts/', views.PostViewSet.as_view({'get': 'list', 'post': 'create'}), name='posts-list'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
