@@ -11,6 +11,13 @@ urlpatterns = [
     path('users/', views.UserViewSet.as_view({'get': 'list', 'delete': 'destroy'}), name='users-list'),
     path('users/<int:pk>/', views.UserViewSet.as_view({'get': 'retrieve', 'delete': 'destroy'}), name='user-detail'),
     path('posts/', views.PostViewSet.as_view({'get': 'list', 'post': 'create'}), name='posts-list'),
+    path('posts/<int:pk>', views.PostViewSet.as_view({'get': 'retrieve'}), name='posts-detail'),
+    path('comments/', views.CommentViewSet.as_view({'get': 'list', 'post': 'create'}), name='comments-list'),
+    path('comments/<int:pk>/', views.CommentViewSet.as_view({
+         'get': 'retrieve',
+         'patch': 'partial_update',
+         'delete': 'destroy'
+         }), name='comments-detail'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

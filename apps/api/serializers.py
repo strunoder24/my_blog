@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from django.contrib.auth import get_user_model
 from apps.api.models import Post
+from apps.api.models import Comment
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -22,7 +23,17 @@ class UserSerializer(serializers.ModelSerializer):
                                                     username=validated_data['username'])
 
 
+class CommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
+        read_only_fields = ('author', 'likes')
+
+
 class PostSerializer(serializers.ModelSerializer):
+    comments = CommentSerializer(many=True, read_only=True)
+
     class Meta:
         model = Post
         fields = '__all__'

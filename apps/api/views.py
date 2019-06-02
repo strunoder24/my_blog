@@ -8,14 +8,17 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth import get_user_model, authenticate, login, logout
-from apps.api.models import Post
 import apps.api.permissions as localPermissions
 
 from apps.helpers.query_params import QueryParamsHelper
 from apps.helpers.viewsets_methods import Destroy
 
+from apps.api.models import Post
+from apps.api.models import Comment
+
 from apps.api.serializers import UserSerializer
 from apps.api.serializers import PostSerializer
+from apps.api.serializers import CommentSerializer
 
 
 @api_view(['GET'])
@@ -79,7 +82,14 @@ class UserViewSet(viewsets.ModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (permissions.AllowAny,)
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
