@@ -88,7 +88,7 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
+    queryset = Comment.objects.filter(level=0)
     serializer_class = CommentSerializer
 
     def perform_create(self, serializer):

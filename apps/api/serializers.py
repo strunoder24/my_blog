@@ -24,17 +24,27 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ('id', 'text', 'likes', 'create_date', 'edit_date', 'parent', 'post', 'children')
         read_only_fields = ('author', 'likes')
+
+    def get_fields(self):
+        fields = super().get_fields()
+        if fields['children']:
+            fields['children'] = CommentSerializer(many=True)
+        return fields
 
 
 class PostSerializer(serializers.ModelSerializer):
-    comments = CommentSerializer(many=True, read_only=True)
+    comments = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
         fields = '__all__'
         read_only_fields = ('author', 'create_date', 'edit_date', 'likes')
+
+    def get_comments(self, obj):
+        queryset = Comment.objects.filter(level=0)
+        serializer = CommentSerializer(instance=queryset, many=True)
+        return serializer.data

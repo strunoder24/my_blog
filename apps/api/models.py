@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Post(models.Model):
@@ -19,10 +20,10 @@ class Post(models.Model):
         ordering = ('create_date',)
 
 
-class Comment(models.Model):
+class Comment(MPTTModel, models.Model):
     author = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, blank=True, null=True)
     post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
+    parent = TreeForeignKey('self', on_delete=models.SET_NULL, related_name="children", blank=True, null=True)
     text = models.CharField(max_length=600, default='')
     likes = models.PositiveIntegerField(default=0)
     create_date = models.DateTimeField(auto_now_add=True)
