@@ -3,7 +3,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from . import views
 
 urlpatterns = [
-    path('', views.api_root),
+    path('', views.ApiRoot.as_view()),
     path('signup/', views.UserViewSet.as_view({'post': 'create'})),
     path('logout/', views.LogoutView.as_view()),
     path('signin/', views.LoginView.as_view()),
@@ -18,6 +18,12 @@ urlpatterns = [
          'patch': 'partial_update',
          'delete': 'destroy'
          }), name='comments-detail'),
+    path('tags/', views.TagViewSet.as_view({'get': 'list', 'post': 'create'}), name='tags-list'),
+    path('tags/<int:pk>', views.TagViewSet.as_view({
+        'get': 'retrieve',
+        'patch': 'partial_update',
+        'delete': 'destroy'
+    }), name='tags-detail')
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

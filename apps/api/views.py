@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from django.contrib.auth import get_user_model, authenticate, login, logout
 import apps.api.permissions as localPermissions
@@ -13,25 +13,25 @@ import apps.api.permissions as localPermissions
 from apps.helpers.query_params import QueryParamsHelper
 from apps.helpers.viewsets_methods import Destroy
 
-from apps.api.models import Post
-from apps.api.models import Comment
+from apps.api.models import Post, Comment, Tag
 
-from apps.api.serializers import UserSerializer
-from apps.api.serializers import PostSerializer
-from apps.api.serializers import CommentSerializer
+from apps.api.serializers import UserSerializer, PostSerializer, CommentSerializer, TagSerializer
 
 
-@api_view(['GET'])
-def api_root(request, format=None):
-    return Response({
-        'users': reverse('users-list', request=request, format=format),
-        'posts': reverse('posts-list', request=request, format=format)
-    })
+class ApiRoot(APIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def get(self, request, format=None):
+        return Response({
+            'users': reverse('users-list', request=request, format=format),
+            'posts': reverse('posts-list', request=request, format=format),
+            'tags': reverse('tags-list', request=request, format=format)
+        })
 
 
 class LoginView(APIView):
-    authentication_classes = ()
-    permission_classes = ()
+    # authentication_classes = ()
+    # permission_classes = ()
 
     def post(self, request, format=None):
         username = request.data.get('username')
@@ -82,6 +82,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -90,6 +91,13 @@ class PostViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.filter(level=0)
     serializer_class = CommentSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
