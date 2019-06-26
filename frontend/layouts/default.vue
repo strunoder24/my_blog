@@ -1,7 +1,8 @@
 <template>
-  <div class="default-layout-wrapper">
-    <nuxt/>
-  </div>
+    <div class="default-layout-wrapper">
+        <A-Header></A-Header>
+        <nuxt/>
+    </div>
 </template>
 
 <script>
@@ -10,9 +11,6 @@
 
 <style lang="sass">
     .default-layout-wrapper
-        display: flex
-        justify-content: center
-        margin: 0 auto
         width: 100%
         height: 100%
 </style>

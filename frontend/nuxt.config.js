@@ -10,18 +10,21 @@ module.exports = {
             {hid: 'description', name: 'description', content: 'My blog fully created by me'}
         ],
         link: [
-            {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
+            {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
+            {rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,700,400italic|Material+Icons' }
         ]
     },
     
     // Глобальные стили
     css: [
-        {src: '~/assets/styles/global_styles.sass', lang: 'sass'}
+        { src: 'vue-material/dist/vue-material.min.css', lang: 'css' },
+        { src: '~/assets/vue-material/theme.scss', lang: 'scss'} // include vue-material theme engine
     ],
     
     // Скрипты исполняемые перед началом работы SPA
     plugins: [
-        '~/plugins/global-components.js',
+        '~/plugins/global-components',
+        '~/plugins/vue-material',
     ],
     
     axios: {

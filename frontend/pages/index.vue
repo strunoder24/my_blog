@@ -1,22 +1,22 @@
 <template>
     <section class="container">
-        <InputComponent v-model="username">
-            Email:
-        </InputComponent>
-        <InputComponent v-model="password" :type="'password'">
-            Пароль:
-        </InputComponent>
-        <div class="buttons">
-            <SimpleButton @click="submit">
-                Войти
-            </SimpleButton>
-            <SimpleButton @click="getUserInfo">
-                Юзер
-            </SimpleButton>
-            <SimpleButton @click="logout" style="margin-top: 10px;">
-                Выйти
-            </SimpleButton>
-        </div>
+<!--        <InputComponent v-model="username">-->
+<!--            Email:-->
+<!--        </InputComponent>-->
+<!--        <InputComponent v-model="password" :type="'password'">-->
+<!--            Пароль:-->
+<!--        </InputComponent>-->
+<!--        <div class="buttons">-->
+<!--            <SimpleButton @click="submit">-->
+<!--                Войти-->
+<!--            </SimpleButton>-->
+<!--            <SimpleButton @click="getUserInfo">-->
+<!--                Юзер-->
+<!--            </SimpleButton>-->
+<!--            <SimpleButton @click="logout" style="margin-top: 10px;">-->
+<!--                Выйти-->
+<!--            </SimpleButton>-->
+<!--        </div>-->
     </section>
 </template>
 
@@ -73,21 +73,21 @@
 </script>
 
 <style lang="sass" scoped>
-    .buttons
-        display: flex
-        justify-content: space-between
-        flex-wrap: wrap
-        padding-top: 100px
+    /*.buttons*/
+    /*    display: flex*/
+    /*    justify-content: space-between*/
+    /*    flex-wrap: wrap*/
+    /*    padding-top: 100px*/
 
 
-    .container
-        display: flex
-        flex-direction: column
-        margin: auto 0
-        padding: 20px
-        width: 300px
-        height: 300px
-        border: 1px solid black
-        border-radius: 5px
+    /*.container*/
+    /*    display: flex*/
+    /*    flex-direction: column*/
+    /*    margin: auto 0*/
+    /*    padding: 20px*/
+    /*    width: 300px*/
+    /*    height: 300px*/
+    /*    border: 1px solid black*/
+    /*    border-radius: 5px*/
 </style>
 
