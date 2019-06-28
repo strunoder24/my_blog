@@ -1,93 +1,35 @@
 <template>
-    <section class="container">
-<!--        <InputComponent v-model="username">-->
-<!--            Email:-->
-<!--        </InputComponent>-->
-<!--        <InputComponent v-model="password" :type="'password'">-->
-<!--            Пароль:-->
-<!--        </InputComponent>-->
-<!--        <div class="buttons">-->
-<!--            <SimpleButton @click="submit">-->
-<!--                Войти-->
-<!--            </SimpleButton>-->
-<!--            <SimpleButton @click="getUserInfo">-->
-<!--                Юзер-->
-<!--            </SimpleButton>-->
-<!--            <SimpleButton @click="logout" style="margin-top: 10px;">-->
-<!--                Выйти-->
-<!--            </SimpleButton>-->
-<!--        </div>-->
-    </section>
+    <div class="main-container">
+        <div class="posts"
+             v-for="post in posts"
+             :key="post.id">
+            <post :post="post"></post>
+        </div>
+    </div>
 </template>
 
 <script>
+    import { mapState } from 'vuex'
+    import Post from '~/components/Post.vue'
+
     export default {
-        data(){
-            return {
-                username: '',
-                password: ''
-            }
+        computed: {
+            ...mapState({
+                posts: state => state.posts.posts
+            })
         },
 
-        methods: {
-            submit(){
-                this.$axios.post('/signin/', {
-                    username: this.username,
-                    password: this.password
-                })
-                    .then(r => {
-                        console.log(r.data);
-                    })
-                    .catch(e => {
-                        console.log(e);
-                    })
-            },
-
-            logout(){
-                this.$axios.post('/logout/', {})
-                    .then(r => {
-                        console.log(r.data);
-                    })
-                    .catch(e => {
-                        console.log(e.response);
-                    })
-            },
-
-            getUserInfo(){
-                let config = {
-                    headers: {
-                        'X-CSRFTOKEN': this.$cookies.get('csrftoken'),
-                    }
-                };
-
-                this.$axios.get('/user-info/', config)
-                    .then(r => {
-                        console.log(r.data);
-                    })
-                    .catch(e => {
-                        console.log(e.response);
-                    })
-            }
-        },
+        components: {
+            'Post': Post
+        }
     }
 </script>
 
 <style lang="sass" scoped>
-    /*.buttons*/
-    /*    display: flex*/
-    /*    justify-content: space-between*/
-    /*    flex-wrap: wrap*/
-    /*    padding-top: 100px*/
+    .main-container
+        @media (min-width: 1000px)
+            margin: 0 62px
 
-
-    /*.container*/
-    /*    display: flex*/
-    /*    flex-direction: column*/
-    /*    margin: auto 0*/
-    /*    padding: 20px*/
-    /*    width: 300px*/
-    /*    height: 300px*/
-    /*    border: 1px solid black*/
-    /*    border-radius: 5px*/
+        @media (max-width: 999px)
+            margin: 0 25px
 </style>
-

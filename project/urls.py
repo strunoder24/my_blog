@@ -16,20 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from apps.api import views
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-
-
-@api_view(['GET'])
-def api_versions(request):
-    return Response({
-        'api-v1': 'http://localhost:8000/api/v1'
-    })
 
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('', api_versions),
+    path('', views.ApiVersions.as_view()),
     path('api/v1/', include('apps.api.urls'), name='api-v1'),
     path('api-auth/', include('rest_framework.urls'), name='api-auth'),
 ]

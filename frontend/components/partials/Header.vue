@@ -5,7 +5,6 @@
                 <router-link to="/" class="logo-text">Блог разработчика</router-link>
             </div>
             <div class="md-layout-item">
-                <md-button to="posts">Посты</md-button>
                 <md-button to="about">Обо мне</md-button>
                 <md-button to="services">Услуги</md-button>
                 <md-button to="projects">Портфолио</md-button>
@@ -25,9 +24,6 @@
             </md-toolbar>
 
             <md-list @click="showNavigation = false">
-                <md-list-item to="posts">
-                    <span class="md-list-item-text">Посты</span>
-                </md-list-item>
                 <md-list-item to="about">
                     <span class="md-list-item-text">Обо мне</span>
                 </md-list-item>
@@ -80,7 +76,7 @@
         methods: {
             resize(width){
                 this.show_drawer = width < 1000
-            }
+            },
         },
     }
 </script>
@@ -111,7 +107,7 @@
 
     .inner-layout
         @media (min-width: 1000px)
-            margin: 0 63px
+            margin: 0 62px
 
         @media (max-width: 999px)
             margin: 0 10px

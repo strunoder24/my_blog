@@ -18,6 +18,15 @@ from apps.api.models import Post, Comment, Tag
 from apps.api.serializers import UserSerializer, PostSerializer, CommentSerializer, TagSerializer
 
 
+class ApiVersions(APIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def get(self, request, format=None):
+        return Response({
+            'api-v1': 'http://localhost:8000/api/v1/',
+        })
+
+
 class ApiRoot(APIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
