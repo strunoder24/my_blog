@@ -18,7 +18,8 @@ module.exports = {
     // Глобальные стили
     css: [
         { src: 'vue-material/dist/vue-material.min.css', lang: 'css' },
-        { src: '~/assets/vue-material/theme.scss', lang: 'scss'} // include vue-material theme engine
+        { src: '~/assets/vue-material/theme.scss', lang: 'scss'}, // include vue-material theme engine
+        { src: '~/assets/styles/main.sass', lang: 'sass'}
     ],
     
     // Скрипты исполняемые перед началом работы SPA

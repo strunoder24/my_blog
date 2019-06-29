@@ -1,12 +1,12 @@
 <template>
     <div class="uniq-container">
-        <div class="title">
-            <slot></slot>
-        </div>
-        <input
-                :type="type"
-                :value="value"
-                @input="$emit('input', $event.target.value)">
+        <md-field>
+            <label><slot></slot></label>
+            <md-input
+                    :type="type"
+                    v-model="localValue"
+            />
+      </md-field>
     </div>
 </template>
 
@@ -21,9 +21,30 @@
             },
             value: {
                 required: true,
-                default: '',
+            },
+        },
+
+        /*
+        Пришлось делать локальные данные, так как компонент MaterialDesign
+        не возвращает объект $event
+        */
+
+        data: function() {
+            return {
+                localValue: ''
             }
-        }
+        },
+
+        created() {
+            this.localValue = this.value
+        },
+
+        watch: {
+            'localValue': function () {
+                console.log('aashdjsjsjdsd');
+                 this.$emit('input', this.localValue)
+            }
+        },
     }
 </script>
 

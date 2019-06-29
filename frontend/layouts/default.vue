@@ -1,6 +1,8 @@
 <template>
     <div class="default-layout-wrapper">
-        <A-Header></A-Header>
+        <no-ssr>
+            <A-Header></A-Header>
+        </no-ssr>
         <nuxt/>
     </div>
 </template>
@@ -11,6 +13,8 @@
 
 <style lang="sass">
     .default-layout-wrapper
+        display: flex
+        flex-direction: column
         width: 100%
         height: 100%
 </style>

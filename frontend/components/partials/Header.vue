@@ -39,7 +39,7 @@
             </md-list>
         </md-drawer>
         </div>
-        <md-button class="md-icon-button admin-icon">
+        <md-button to="admin" class="md-icon-button admin-icon">
             <md-icon>edit</md-icon>
             <md-tooltip>Админка</md-tooltip>
         </md-button>
@@ -58,13 +58,11 @@
         },
 
         created() {
-            if (process.client) {
-                this.resize(window.innerWidth);
+            this.resize(window.innerWidth);
 
-                window.addEventListener('resize', function (e) {
-                    this.resize(e.target.innerWidth)
-                }.bind(this))
-            }
+            window.addEventListener('resize', function (e) {
+                this.resize(e.target.innerWidth)
+            }.bind(this))
         },
 
         watch: {

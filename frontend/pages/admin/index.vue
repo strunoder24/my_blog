@@ -1,26 +1,42 @@
 <template>
-    <section class="container">
-        <InputComponent v-model="username">
-            Email:
-        </InputComponent>
-        <InputComponent v-model="password" :type="'password'">
-            Пароль:
-        </InputComponent>
-        <div class="buttons">
-            <SimpleButton @click="submit">
-                Войти
-            </SimpleButton>
-            <SimpleButton @click="getUserInfo">
-                Юзер
-            </SimpleButton>
-            <SimpleButton @click="logout" style="margin-top: 10px;">
-                Выйти
-            </SimpleButton>
-        </div>
-    </section>
+    <div class="admin-wrapper md-layout">
+        <section class="login-form" v-if="Object.keys(users).length === 0">
+            <md-card class="md-layout-item md-size-100">
+                <md-card-header>
+                    <div class="md-title">Доступ к админке</div>
+                </md-card-header>
+
+                <md-card-content>
+                    <div class="md-layout-item">
+                        <InputComponent v-model="username">
+                            Email:
+                        </InputComponent>
+                    </div>
+                    <div class="md-layout-item">
+                        <InputComponent v-model="password" :type="'password'">
+                            Пароль:
+                        </InputComponent>
+                    </div>
+                </md-card-content>
+                <md-card-actions style="padding: 16px">
+                    <SimpleButton @click="submit">
+                        Войти
+                    </SimpleButton>
+                </md-card-actions>
+            </md-card>
+            <!--            <div class="buttons">-->
+
+<!--            </div>-->
+        </section>
+        <section v-else>
+            Вы вошли в админку!
+        </section>
+    </div>
 </template>
 
 <script>
+    import { mapState } from 'vuex'
+
     export default {
         data(){
             return {
@@ -29,14 +45,26 @@
             }
         },
 
+        computed: {
+            ...mapState({
+                users: state => state.accounts['user-info']
+            })
+        },
+
         methods: {
             submit(){
+                // let csrf = this.$cookies.get('csrftoken');
+                // let config = {
+                //     headers: {
+                //         'X-CSRFTOKEN': csrf
+                //     }
+                // };
                 this.$axios.post('/signin/', {
                     username: this.username,
                     password: this.password
                 })
                     .then(r => {
-                        console.log(r.data);
+                        this.$store.commit('accounts/setInfo', r.data)
                     })
                     .catch(e => {
                         console.log(e);
@@ -52,42 +80,19 @@
                         console.log(e.response);
                     })
             },
-
-            getUserInfo(){
-                let config = {
-                    headers: {
-                        'X-CSRFTOKEN': this.$cookies.get('csrftoken'),
-                    }
-                };
-
-                this.$axios.get('/user-info/', config)
-                    .then(r => {
-                        console.log(r.data);
-                    })
-                    .catch(e => {
-                        console.log(e.response);
-                    })
-            }
         },
     }
 </script>
 
 <style lang="sass" scoped>
-    /*.buttons*/
-    /*    display: flex*/
-    /*    justify-content: space-between*/
-    /*    flex-wrap: wrap*/
-    /*    padding-top: 100px*/
+    .admin-wrapper
+        display: flex
+        flex: 1
+        align-items: center
+        justify-content: center
 
 
-    /*.container*/
-    /*    display: flex*/
-    /*    flex-direction: column*/
-    /*    margin: auto 0*/
-    /*    padding: 20px*/
-    /*    width: 300px*/
-    /*    height: 300px*/
-    /*    border: 1px solid black*/
-    /*    border-radius: 5px*/
+    .login-form
+        width: 400px
 </style>
 

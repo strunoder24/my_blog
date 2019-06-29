@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 
 from django.contrib.auth import get_user_model, authenticate, login, logout
 import apps.api.permissions as localPermissions
@@ -39,8 +39,8 @@ class ApiRoot(APIView):
 
 
 class LoginView(APIView):
-    # authentication_classes = ()
-    # permission_classes = ()
+    authentication_classes = ()
+    permission_classes = (AllowAny,)
 
     def post(self, request, format=None):
         username = request.data.get('username')
@@ -65,12 +65,15 @@ class LogoutView(APIView):
 
 
 class UserInfo(APIView):
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def get(self, request):
         user = request.user
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
+        if user.is_authenticated:
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
 class UserViewSet(viewsets.ModelViewSet):

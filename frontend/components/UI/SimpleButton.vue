@@ -1,21 +1,22 @@
 <template>
-    <button @click="$emit('click')">
+    <md-button
+            class="md-raised"
+            :class="['md-' + type]"
+            @click="$emit('click')">
         <slot></slot>
-    </button>
+    </md-button>
 </template>
 
 <script>
-    export default {}
+    export default {
+        props: {
+            type: {
+                required: false,
+                default: 'primary'
+            }
+        }
+    }
 </script>
 
 <style lang="sass" scoped>
-    button
-        width: 100px
-        height: 26px
-        font-size: 14px
-
-        &:hover
-            transition: background-color linear .2s, color linear .2s
-            background-color: #000
-            color: #fff
 </style>
