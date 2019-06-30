@@ -1,11 +1,12 @@
 from rest_framework import viewsets
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, detail_route
 from rest_framework.reverse import reverse
 from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
+from django.core.exceptions import ObjectDoesNotExist
 
 from django.contrib.auth import get_user_model, authenticate, login, logout
 import apps.api.permissions as localPermissions
@@ -112,4 +113,13 @@ class CommentViewSet(viewsets.ModelViewSet):
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (AllowAny,)
+
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            instance = Tag.objects.get(name=kwargs['name'])
+            serializer = TagSerializer(instance)
+            return Response(serializer.data)
+
+        except ObjectDoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)

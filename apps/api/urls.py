@@ -19,10 +19,9 @@ urlpatterns = [
          'delete': 'destroy'
          }), name='comments-detail'),
     path('tags/', views.TagViewSet.as_view({'get': 'list', 'post': 'create'}), name='tags-list'),
-    path('tags/<int:pk>', views.TagViewSet.as_view({
+    path('tags/<str:name>', views.TagViewSet.as_view({
         'get': 'retrieve',
         'patch': 'partial_update',
-        'delete': 'destroy'
     }), name='tags-detail')
 ]
 

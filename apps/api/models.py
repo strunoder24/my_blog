@@ -35,6 +35,7 @@ class Comment(MPTTModel, models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=60)
+    icon = models.CharField(max_length=200, blank=True)
     posts = models.ManyToManyField(Post, related_name='tags')
     create_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(auto_now_add=True)

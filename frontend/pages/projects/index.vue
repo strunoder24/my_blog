@@ -1,5 +1,7 @@
 <template>
-    <h1>Проекты</h1>
+    <div class="main-container">
+        <h1>Проекты</h1>
+    </div>
 </template>
 
 <script>

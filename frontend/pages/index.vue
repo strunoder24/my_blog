@@ -26,10 +26,4 @@
 </script>
 
 <style lang="sass" scoped>
-    .main-container
-        @media (min-width: 1000px)
-            margin: 0 62px
-
-        @media (max-width: 999px)
-            margin: 0 25px
 </style>

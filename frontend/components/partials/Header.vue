@@ -129,7 +129,7 @@
         position: absolute
 
         @media (min-width: 1000px)
-            right: 30px
+            right: 55px
 
         @media (max-width: 999px)
             right: 20px

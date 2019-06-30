@@ -1,21 +1,24 @@
 <template>
     <div class="admin-wrapper main-container md-layout">
-        <login v-if="Object.keys(users).length === 0"></login>
-        <section class="admin-wrapper md-layout" v-else>
+        <section class="admin-wrapper md-layout">
             <ButtonsPanel />
         </section>
     </div>
 </template>
 
 <script>
-    import login from '~/components/admin/Login.vue'
     import ButtonsPanel from '~/components/admin/ButtonsPanel.vue'
-
     import { mapState } from 'vuex'
 
     export default {
         data(){
             return {}
+        },
+
+        created() {
+            if (Object.keys(this.users).length === 0) {
+                this.$router.push('admin')
+            }
         },
 
         computed: {
@@ -28,7 +31,6 @@
         },
 
         components: {
-            login,
             ButtonsPanel
         }
     }
