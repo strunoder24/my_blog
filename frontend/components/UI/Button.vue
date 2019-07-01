@@ -1,5 +1,6 @@
 <template>
     <md-button
+            md-with-hover
             class="md-raised"
             :to="to"
             :class="['md-' + type]"

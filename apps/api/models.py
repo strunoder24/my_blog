@@ -9,6 +9,8 @@ class Post(models.Model):
     parsed_markdown = models.TextField(blank=True)
     lang = models.CharField(choices=[('en', 'english'), ('ru', 'russian')], default='ru', max_length=100)
     likes = models.PositiveIntegerField(default=0)
+    main_image = models.ImageField(upload_to='posts_images/', blank=True, null=True)
+    is_published = models.BooleanField(default=False)
     author = models.ForeignKey(get_user_model(), related_name='posts', on_delete=models.SET_NULL, blank=True, null=True)
     create_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(auto_now_add=True)

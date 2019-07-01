@@ -1,5 +1,5 @@
 <template>
-    <div class="md-layout md-layout-item md-size-100 buttons-container">
+    <div class="md-layout-item md-size-100 buttons-container">
         <h1>{{ header }}</h1>
         <div class="left-buttons">
             <Button
@@ -74,8 +74,10 @@
 
 <style lang="sass" scoped>
     .buttons-container
+        display: flex
         align-items: center
         height: 77px
+        max-height: 77px
         padding: 20px 8px 20px 0
 
         h1

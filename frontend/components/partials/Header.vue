@@ -134,11 +134,4 @@
         @media (max-width: 999px)
             right: 20px
 
-    .md-tooltip
-        font-size: 16px
-        font-weight: 400 !important
-
-        @media (min-width: 1000px)
-            height: 25px !important
-
 </style>
