@@ -107,12 +107,13 @@
 
     .post-title
         margin-top: 0
-        max-height: 60px
+        max-height: 64px
+        overflow: hidden
 
 
 
     .post-content
-        height: 170px
+        height: 150px
 
 
 
