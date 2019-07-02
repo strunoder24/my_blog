@@ -48,7 +48,6 @@
     .admin-wrapper
         display: flex
         flex-direction: column
-        flex: 1
 
 
     .pagination-container

@@ -2,7 +2,7 @@
     <div class="admin-wrapper main-container md-layout">
         <section class="admin-wrapper md-layout">
             <ButtonsPanel />
-
+            <TagsList :tags="tags.results" />
             <Paginator
                         v-if="tags.pages_count > 1"
                         :info="tags"
@@ -50,6 +50,11 @@
 
 <style lang="sass" scoped>
     .admin-wrapper
-        flex: 1
+
+
+    .pagination-container
+        display: block
+        margin-top: auto
+        padding: 20px 0
 </style>
 

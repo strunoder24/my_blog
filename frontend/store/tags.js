@@ -1,3 +1,6 @@
+import vue from 'vue'
+
+
 export const state = () => ({
     tags: {}
 });
@@ -7,6 +10,16 @@ export const mutations = {
     setTags(state, tags) {
         state.tags = tags;
     },
+    
+    changeTagValue(state, {id, value}) {
+        const collection = state.tags.results;
+        for (let i = 0; i < collection.length; i++) {
+            if (collection[i].id === id) {
+                vue.set(collection[i], 'name', value);
+                return
+            }
+        }
+    }
 };
 
 
