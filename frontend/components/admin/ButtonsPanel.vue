@@ -78,7 +78,7 @@
         align-items: center
         height: 77px
         max-height: 77px
-        padding: 20px 8px 20px 0
+        padding: 20px 0
 
         h1
             font-size: 28px

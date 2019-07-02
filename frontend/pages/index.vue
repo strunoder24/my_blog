@@ -1,7 +1,7 @@
 <template>
     <div class="main-container">
         <div class="posts"
-             v-for="post in posts"
+             v-for="post in posts.results"
              :key="post.id">
             <post :post="post"></post>
         </div>

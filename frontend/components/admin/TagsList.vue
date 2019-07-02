@@ -3,6 +3,7 @@
         <md-card
                 class="tag md-layout-item"
                 v-for="tag in tags"
+                @click.native="edit_tag(tag)"
                 :key="tag.id"
                 md-with-hover
         >
@@ -17,14 +18,6 @@
                     v-model="temp_value"
                     :ref="tag.id"
                     type="text">
-            <md-button
-                    class="md-icon-button edit-button"
-                    v-if="editable_id !== tag.id"
-                    @click="edit_tag(tag)">
-
-                <md-icon>edit</md-icon>
-
-            </md-button>
         </md-card>
     </div>
 </template>
@@ -53,12 +46,14 @@
 
         methods: {
             edit_tag(tag) {
-                this.editable_id = tag.id;
-                this.temp_value = tag.name;
-                this.$nextTick(() => {
-                    const element = this.$refs[tag.id][0];
-                    element.focus();
-                });
+                if (this.editable_id === 0) {
+                    this.editable_id = tag.id;
+                    this.temp_value = tag.name;
+                    this.$nextTick(() => {
+                        const element = this.$refs[tag.id][0];
+                        element.focus();
+                    });
+                }
             },
 
             close_input(){
@@ -95,11 +90,9 @@
         min-width: 350px
         padding: 0 10px
         margin: 10px
-        cursor: default
-
 
     .tag-name
-        width: 90%
+        width: 100%
         font-size: 26px
         font-weight: 600
         line-height: 1.3
