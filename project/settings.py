@@ -138,5 +138,9 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
-    )
+    ),
+
+    'DEFAULT_PAGINATION_CLASS': 'project.paginator.CustomPaginator',
+    'POST_RESULTS': 10,
+    'TAGS_RESULTS': 20,
 }

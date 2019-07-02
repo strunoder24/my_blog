@@ -6,6 +6,7 @@ from rest_framework import permissions
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
+from project.paginator import TagsPaginator
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.contrib.auth import get_user_model, authenticate, login, logout
@@ -113,6 +114,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+    pagination_class = TagsPaginator
     permission_classes = (AllowAny,)
 
     def retrieve(self, request, *args, **kwargs):

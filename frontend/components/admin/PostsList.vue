@@ -90,7 +90,6 @@
 </script>
 
 <style lang="sass" scoped>
-    .admin-wrapper
     .admin-list
         margin: -15px
 

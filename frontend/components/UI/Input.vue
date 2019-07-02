@@ -41,7 +41,6 @@
 
         watch: {
             'localValue': function () {
-                console.log('aashdjsjsjdsd');
                  this.$emit('input', this.localValue)
             }
         },

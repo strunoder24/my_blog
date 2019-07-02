@@ -3,9 +3,12 @@
         <login v-if="Object.keys(users).length === 0"></login>
         <section class="admin-wrapper md-layout" v-else>
             <ButtonsPanel />
-            <PostsList :posts="posts" />
+            <PostsList :posts="posts.results" />
             <div class="pagination-container">
-
+                <Paginator
+                        v-if="posts.pages_count > 1"
+                        :info="posts"
+                        :api="'posts'"/>
             </div>
         </section>
     </div>
@@ -49,9 +52,8 @@
 
 
     .pagination-container
-        height: 50px
-        width: 100%
         margin-top: auto
+        padding: 20px 0
 
 
 </style>
