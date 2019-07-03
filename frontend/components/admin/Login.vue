@@ -37,12 +37,6 @@
 
         methods: {
             submit(){
-                // let csrf = this.$cookies.get('csrftoken');
-                // let config = {
-                //     headers: {
-                //         'X-CSRFTOKEN': csrf
-                //     }
-                // };
                 this.$axios.post('/signin/', {
                     username: this.username,
                     password: this.password

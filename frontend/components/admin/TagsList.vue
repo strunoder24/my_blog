@@ -7,7 +7,8 @@
                 :key="tag.id"
                 md-with-hover
         >
-            <div class="tag-name"
+            <div class="tag-name ellipsis"
+                 :title="tag.name"
                  v-if="editable_id !== tag.id">
                 {{ tag.name }}
             </div>
@@ -87,7 +88,7 @@
         display: flex
         align-items: center
         height: 60px
-        min-width: 350px
+        min-width: 300px
         padding: 0 10px
         margin: 10px
 

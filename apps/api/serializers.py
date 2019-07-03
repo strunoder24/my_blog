@@ -38,7 +38,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ('id', 'name', 'icon', 'create_date', 'edit_date')
+        fields = ('id', 'name', 'create_date', 'edit_date')
 
 
 class PostSerializer(serializers.ModelSerializer):

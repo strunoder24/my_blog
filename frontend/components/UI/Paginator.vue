@@ -55,9 +55,9 @@
                 else if (this.api === 'tags') {
                     if (typeof to === 'number') {
                         const url = process.env.baseUrl + '/tags/' + `?p=${to}`;
-                        this.$store.dispatch('posts/getTagsOnPaginator', {context: this, url, page_number: to})
+                        this.$store.dispatch('tags/getTagsOnPaginator', {context: this, url, page_number: to})
                     } else {
-                        this.$store.dispatch('posts/getTagsOnPaginator', {
+                        this.$store.dispatch('tags/getTagsOnPaginator', {
                             context: this,
                             url: this.info[to],
                             page_number: to === 'next' ? this.info.current_page + 1 : this.info.current_page - 1
@@ -71,8 +71,10 @@
 
 <style lang="sass" scoped>
     .paginator
+        margin-top: auto
         height: 40px
         width: 100%
+        margin-bottom: 30px
 
     .visited
         background-color: rgba(0, 0, 0, 0.1)

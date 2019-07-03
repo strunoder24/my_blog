@@ -4,6 +4,13 @@
         <div class="left-buttons">
             <Button
                     class="admin-control-button"
+                    @click="$store.commit('triggers/triggerCreateTag')"
+                    v-if="createTag"
+                    type="add">
+                Создать тег
+            </Button>
+            <Button
+                    class="admin-control-button"
                     to="/admin/tags"
                     v-if="toTags">
                 Настройки тегов
@@ -35,6 +42,7 @@
                 logout: false,
                 toList: false,
                 toTags: false,
+                createTag: false,
             }
         },
 
@@ -53,6 +61,7 @@
 
             else if (this.$route.name === 'admin-tags') {
                 this.header = 'Настройка тегов';
+                this.createTag = true;
                 this.toList = true;
             }
         },

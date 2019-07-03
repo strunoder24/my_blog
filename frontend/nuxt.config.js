@@ -26,6 +26,7 @@ module.exports = {
     plugins: [
         '~/plugins/global-components',
         '~/plugins/vue-material',
+        '~/plugins/axios',
     ],
     
     axios: {
