@@ -39,10 +39,6 @@
             </md-list>
         </md-drawer>
         </div>
-        <md-button to="admin" class="md-icon-button admin-icon">
-            <md-icon>edit</md-icon>
-            <md-tooltip>Админка</md-tooltip>
-        </md-button>
     </header>
 </template>
 
@@ -104,6 +100,8 @@
 
 
     .inner-layout
+        width: 100%
+
         @media (min-width: 1000px)
             margin: 0 62px
 
