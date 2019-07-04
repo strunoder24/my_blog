@@ -1,5 +1,5 @@
 <template>
-    <div class="admin-wrapper main-container md-layout" style="flex: 1">
+    <div v-if="renderGranted" class="admin-wrapper main-container md-layout" style="flex: 1">
         <login v-if="Object.keys(users).length === 0"></login>
         <section class="admin-wrapper md-layout" v-else>
             <ButtonsPanel />
@@ -23,7 +23,13 @@
 
     export default {
         data(){
-            return {}
+            return {
+                renderGranted: false
+            }
+        },
+
+        created(){
+            this.renderFunction()
         },
 
         computed: {
@@ -34,6 +40,11 @@
         },
 
         methods: {
+            async renderFunction() {
+                await this.$store.dispatch('accounts/getUserInfo', this)
+                await this.$store.dispatch('posts/getPosts', this)
+                this.renderGranted = true
+            }
         },
 
         components: {

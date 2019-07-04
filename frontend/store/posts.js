@@ -11,6 +11,21 @@ export const mutations = {
 
 
 export const actions = {
+    getPosts({commit}, context) {
+        return new Promise((res, rej) => {
+            context.$axios
+                .get(process.env.baseUrl + '/posts/' + (context.$route.query.p ? `?p=${context.$route.query.p}` : ''))
+                .then(response => {
+                    commit('setPosts', response.data);
+                    res()
+                })
+                .catch(e => {
+                    console.log(e);
+                    res()
+                })
+        })
+    },
+    
     getPostsOnPaginator({commit}, { context, url, page_number }) {
         context.$axios.get(url)
             .then(response => {

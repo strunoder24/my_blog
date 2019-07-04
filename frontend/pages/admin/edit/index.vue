@@ -48,4 +48,3 @@
     .admin-wrapper
         flex: 1
 </style>
-

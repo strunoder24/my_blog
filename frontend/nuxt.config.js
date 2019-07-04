@@ -23,6 +23,11 @@ module.exports = {
         { src: '~/assets/styles/main.sass', lang: 'sass'}
     ],
     
+    // middleware запускаемый только на серваке
+    serverMiddleware: [
+        '~/middleware/server.js'
+    ],
+    
     // Скрипты исполняемые перед началом работы SPA
     plugins: [
         '~/plugins/global-components',
@@ -44,10 +49,6 @@ module.exports = {
         '@nuxtjs/axios',
         'cookie-universal-nuxt',
         '@nuxtjs/markdownit',
-    ],
-    
-    serverMiddleware: [
-        '~/middleware/server.js'
     ],
     
     markdownit: {

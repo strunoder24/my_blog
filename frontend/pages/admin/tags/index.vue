@@ -1,5 +1,5 @@
 <template>
-    <div class="admin-wrapper main-container md-layout">
+    <div v-if="renderGranted" class="admin-wrapper main-container md-layout">
         <section class="section-wrapper">
             <ButtonsPanel/>
             <TagsList :tags="tags.results" />
@@ -25,12 +25,12 @@
         data(){
             return {
                 showCreateTag: false,
+                renderGranted: false
             }
         },
 
         created() {
             this.$store.dispatch('tags/getTags', {context: this});
-            this.GTFO();
         },
 
         computed: {
@@ -41,18 +41,21 @@
         },
 
         methods: {
-            GTFO() {
-                if (Object.keys(this.users).length === 0) {
-                    this.$router.push('admin')
-                }
-            }
         },
 
         components: {
             ButtonsPanel,
             TagsList,
             CreateTag,
-        }
+        },
+
+        beforeRouteEnter(to, from, next) {
+            next(async vm => {
+                await vm.$store.dispatch('accounts/getUserInfo', vm)
+                if (Object.keys(vm.users).length === 0) next('/admin');
+                else vm.renderGranted = true;
+            })
+        },
     }
 </script>
 
