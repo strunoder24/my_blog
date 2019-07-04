@@ -20,7 +20,8 @@
         },
 
         created() {
-            this.GTFO()
+            console.log(document);
+            this.GTFO();
         },
 
         computed: {

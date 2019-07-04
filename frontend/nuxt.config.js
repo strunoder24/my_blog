@@ -46,6 +46,10 @@ module.exports = {
         '@nuxtjs/markdownit',
     ],
     
+    serverMiddleware: [
+        '~/middleware/server.js'
+    ],
+    
     markdownit: {
         injected: true
     },
