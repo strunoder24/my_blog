@@ -7,12 +7,12 @@
 
                 <md-card-content>
                     <div class="md-layout-item">
-                        <InputComponent v-model="username">
+                        <InputComponent v-model="username" @submit="submit">
                             Email:
                         </InputComponent>
                     </div>
                     <div class="md-layout-item">
-                        <InputComponent v-model="password" :type="'password'">
+                        <InputComponent v-model="password" @submit="submit" :type="'password'">
                             Пароль:
                         </InputComponent>
                     </div>

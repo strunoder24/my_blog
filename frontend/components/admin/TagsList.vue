@@ -1,5 +1,5 @@
 <template>
-    <div class="admin-list md-layout">
+    <div class="tags-list">
         <md-card
                 class="tag md-layout-item"
                 v-for="tag in tags"
@@ -81,7 +81,9 @@
 </script>
 
 <style lang="sass" scoped>
-    .admin-list
+    .tags-list
+        display: flex
+        flex-wrap: wrap
         margin: -10px
 
     .tag

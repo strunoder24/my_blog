@@ -28,4 +28,8 @@
     .md-add
         color: #fff !important
         background-color: #69f0ae !important
+
+        &:disabled
+            background-color: #dcdcdc !important
+            color: #afafaf !important
 </style>

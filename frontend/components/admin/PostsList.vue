@@ -1,5 +1,5 @@
 <template>
-    <div class="admin-list md-layout">
+    <div class="post-list">
         <md-card
                 md-with-hover
                 class="post-container"
@@ -90,7 +90,9 @@
 </script>
 
 <style lang="sass" scoped>
-    .admin-list
+    .post-list
+        display: flex
+        flex-wrap: wrap
         margin: -15px
 
 

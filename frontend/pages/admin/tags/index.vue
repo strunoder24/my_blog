@@ -59,17 +59,5 @@
 <style lang="sass" scoped>
     .admin-wrapper
         flex: 1
-
-
-    .section-wrapper
-        display: flex
-        flex-direction: column
-        width: 100%
-
-
-    .pagination-container
-        display: block
-        margin-top: auto
-        padding: 20px 0
 </style>
 

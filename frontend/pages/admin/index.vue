@@ -1,5 +1,5 @@
 <template>
-    <div class="admin-wrapper main-container md-layout">
+    <div class="admin-wrapper main-container md-layout" style="flex: 1">
         <login v-if="Object.keys(users).length === 0"></login>
         <section class="admin-wrapper md-layout" v-else>
             <ButtonsPanel />

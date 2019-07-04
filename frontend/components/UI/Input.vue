@@ -3,6 +3,7 @@
         <md-field>
             <label><slot></slot></label>
             <md-input
+                    @keyup.enter="$emit('submit')"
                     :type="type"
                     v-model="localValue"
             />

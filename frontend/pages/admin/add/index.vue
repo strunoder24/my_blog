@@ -1,24 +1,26 @@
 <template>
     <div class="admin-wrapper main-container md-layout">
-        <section class="admin-wrapper md-layout">
+        <section class="section-wrapper">
             <ButtonsPanel />
+            <Markdown v-model="value"/>
         </section>
     </div>
 </template>
 
 <script>
     import ButtonsPanel from '~/components/admin/ButtonsPanel.vue'
+    import Markdown from '~/components/admin/Markdown.vue'
     import { mapState } from 'vuex'
 
     export default {
         data(){
-            return {}
+            return {
+                value: ''
+            }
         },
 
         created() {
-            if (Object.keys(this.users).length === 0) {
-                this.$router.push('admin')
-            }
+            this.GTFO()
         },
 
         computed: {
@@ -28,10 +30,16 @@
         },
 
         methods: {
+            GTFO() {
+                if (Object.keys(this.users).length === 0) {
+                    this.$router.push('/admin')
+                }
+            },
         },
 
         components: {
-            ButtonsPanel
+            ButtonsPanel,
+            Markdown
         }
     }
 </script>

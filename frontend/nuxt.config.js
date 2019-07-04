@@ -6,12 +6,13 @@ module.exports = {
         title: 'Web Developer Blog',
         meta: [
             {charset: 'utf-8'},
-            {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-            {hid: 'description', name: 'description', content: 'My blog fully created by me'}
+            {name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            {hid: 'description', name: 'description', content: 'Блог fullstack web разработчика' }
         ],
         link: [
-            {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
-            {rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,700,400italic|Material+Icons' }
+            {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+            {rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,700,400italic|Material+Icons' },
+            {rel: "stylesheet", href: 'https://fonts.googleapis.com/css?family=Ubuntu+Mono&display=swap&subset=cyrillic-ext' }
         ]
     },
     
@@ -42,7 +43,12 @@ module.exports = {
     modules: [
         '@nuxtjs/axios',
         'cookie-universal-nuxt',
+        '@nuxtjs/markdownit',
     ],
+    
+    markdownit: {
+        injected: true
+    },
     
     /*
     ** Customize the progress bar color
