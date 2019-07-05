@@ -110,6 +110,7 @@
         margin-top: 0
         max-height: 64px
         overflow: hidden
+        line-height: 1.3
 
 
 

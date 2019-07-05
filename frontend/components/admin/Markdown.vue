@@ -4,18 +4,18 @@
                     class="markdown-content"
                     v-if="!preview"
 
-            ><textarea v-model="tempContent"></textarea>
+            ><textarea v-model="content" @input="$emit('input', content)"></textarea>
         </div>
         <div
                     class="markdown-ready-field markdown-parsed"
                     v-if="preview"
-                    v-html="$md.render(tempContent)"
+                    v-html="$md.render(content)"
         ></div>
         <md-divider style="margin-top: auto;"></md-divider>
         <div class="markdown-footer">
             <Button
+                    @click="$emit('saved')"
                     type="add"
-                    :disabled="content === tempContent"
                 >Сохранить
             </Button>
             <Button
@@ -38,15 +38,16 @@
     export default {
         data: () => ({
             content: '',
-            tempContent: 'Привет, сейчас я тестирую маркдаун\n' +
-                '\n' +
-                '# Заголовок\n' +
-                '\n' +
-                '## Поменьше\n' +
-                '\n' +
-                '### Совсем маленький',
             preview: false,
-        })
+        }),
+
+        created() {
+            if (this.$attrs.value) {
+                this.content = this.$attrs.value
+            }
+        },
+
+        methods: {},
     }
 </script>
 

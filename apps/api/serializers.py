@@ -54,3 +54,13 @@ class PostSerializer(serializers.ModelSerializer):
         queryset = Comment.objects.filter(level=0)
         serializer = CommentSerializer(instance=queryset, many=True)
         return serializer.data
+
+    # def create(self, validated_data):
+    #     print(111)
+    #     tags = validated_data.pop('tags')
+    #     post = Post.objects.create(**validated_data)
+    #     for tag in tags:
+    #         post.tags.set(tag)
+    #
+    #     return post
+
