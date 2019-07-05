@@ -35,11 +35,13 @@
         },
 
         beforeRouteEnter(to, from, next) {
-            next(async vm => {
-                await vm.$store.dispatch('accounts/getUserInfo', vm);
-                if (Object.keys(vm.users).length === 0) next('/admin');
-                else vm.renderGranted = true;
-            })
+            next(
+                async vm => {
+                    await vm.$store.dispatch('accounts/getUserInfo', vm);
+                    if (Object.keys(vm.users).length === 0) next('/admin');
+                    else vm.renderGranted = true;
+                }
+            )
         },
     }
 </script>

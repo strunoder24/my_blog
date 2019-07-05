@@ -24,20 +24,25 @@ export const mutations = {
 
 
 export const actions = {
-    getTags({commit}, { context }){
-        context.$axios.get(process.env.baseUrl + '/tags/' + (context.$route.query.p ? `?p=${context.$route.query.p}` : ''))
-            .then(response => {
-                    commit('setTags', response.data);
-                })
-            .catch(e => console.log(e))
+    async getTags({commit}, { context }){
+        try {
+            const response = await context.$axios.get(process.env.baseUrl +
+                                                      '/tags/' +
+                                                      (context.$route.query.p ? `?p=${context.$route.query.p}` : ''));
+            commit('setTags', response.data);
+        } catch (e) {
+            console.log(e);
+        }
     },
     
-    getTagsOnPaginator({commit}, { context, url, page_number }) {
-        context.$axios.get(url)
-            .then(response => {
-                    commit('setTags', response.data);
-                    context.$router.replace({query: {p: page_number}})
-                })
-            .catch(e => console.log(e))
+    async getTagsOnPaginator({commit}, { context, url, page_number }) {
+        try {
+            const response = await context.$axios.get(url);
+            commit('setTags', response.data);
+            context.$router.replace({query: {p: page_number}});
+            context.$axios.get(url)
+        } catch (e) {
+            console.log(e);
+        }
     },
 };

@@ -11,27 +11,24 @@ export const mutations = {
 
 
 export const actions = {
-    getPosts({commit}, context) {
-        return new Promise((res, rej) => {
-            context.$axios
-                .get(process.env.baseUrl + '/posts/' + (context.$route.query.p ? `?p=${context.$route.query.p}` : ''))
-                .then(response => {
-                    commit('setPosts', response.data);
-                    res()
-                })
-                .catch(e => {
-                    console.log(e);
-                    res()
-                })
-        })
+    async getPosts({commit}, context) {
+        try {
+            const response = await context.$axios.get(process.env.baseUrl +
+                                                      '/posts/' +
+                                                      (context.$route.query.p ? `?p=${context.$route.query.p}` : ''));
+            commit('setPosts', response.data);
+        } catch (e) {
+            console.log(e);
+        }
     },
     
-    getPostsOnPaginator({commit}, { context, url, page_number }) {
-        context.$axios.get(url)
-            .then(response => {
-                    commit('setPosts', response.data);
-                    context.$router.replace({query: {p: page_number}})
-                })
-            .catch(e => console.log(e))
+    async getPostsOnPaginator({commit}, { context, url, page_number }) {
+        try {
+            const response = await context.$axios.get(url);
+            commit('setPosts', response.data);
+            context.$router.replace({query: {p: page_number}})
+        } catch (e) {
+            console.log(e);
+        }
     },
 };

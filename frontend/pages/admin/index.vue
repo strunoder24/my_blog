@@ -29,7 +29,7 @@
         },
 
         created(){
-            this.renderFunction()
+            this.renderMethod()
         },
 
         computed: {
@@ -40,7 +40,7 @@
         },
 
         methods: {
-            async renderFunction() {
+            async renderMethod(){
                 await this.$store.dispatch('accounts/getUserInfo', this)
                 await this.$store.dispatch('posts/getPosts', this)
                 this.renderGranted = true

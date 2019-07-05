@@ -9,19 +9,12 @@ export const mutations = {
 };
 
 export const actions = {
-    getUserInfo({commit}, context) {
-        return new Promise((res, rej) => {
-            context.$axios
-                .get(process.env.baseUrl + '/user-info/')
-                .then(response => {
-                    commit('setInfo', response.data);
-                    res()
-                })
-                .catch(e => {
-                    context.$router.push('404');
-                    console.log(e);
-                    res()
-                })
-        });
+    async getUserInfo({ commit }, context) {
+        try {
+            const response = await context.$axios.get(process.env.baseUrl + '/user-info/');
+            commit('setInfo', response.data);
+        } catch (e) {
+            console.log(e);
+        }
     }
 };
