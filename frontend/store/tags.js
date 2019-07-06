@@ -24,10 +24,9 @@ export const mutations = {
 
 
 export const actions = {
-    async getTags({commit}, { context }){
+    async getTags({commit}, context){
         try {
-            const response = await context.$axios.get(process.env.baseUrl +
-                                                      '/tags/' +
+            const response = await context.$axios.get('/tags/' +
                                                       (context.$route.query.p ? `?p=${context.$route.query.p}` : ''));
             commit('setTags', response.data);
         } catch (e) {

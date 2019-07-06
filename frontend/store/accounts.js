@@ -11,7 +11,7 @@ export const mutations = {
 export const actions = {
     async getUserInfo({ commit }, context) {
         try {
-            const response = await context.$axios.get(process.env.baseUrl + '/user-info/');
+            const response = await context.$axios.get('/user-info/');
             commit('setInfo', response.data);
         } catch (e) {
             console.log(e);

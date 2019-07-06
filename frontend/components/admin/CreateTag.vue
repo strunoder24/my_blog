@@ -38,7 +38,7 @@
 
         methods: {
             createTag(){
-                this.$axios.$post('http://localhost:8000/api/v1/tags/', {
+                this.$axios.$post('/tags/', {
                     name: this.value
                 })
                     .then(r => {

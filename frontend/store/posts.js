@@ -13,12 +13,14 @@ export const mutations = {
 export const actions = {
     async getPosts({commit}, context) {
         try {
-            const response = await context.$axios.get(process.env.baseUrl +
-                                                      '/posts/' +
-                                                      (context.$route.query.p ? `?p=${context.$route.query.p}` : ''));
+            const url = '/posts/' + (context.$route.query.p ? `?p=${context.$route.query.p}` : '');
+            const response = await context.$axios.get(url);
             commit('setPosts', response.data);
         } catch (e) {
-            console.log(e);
+            if (e.response && e.response.status === 404) {
+                const response = await context.$axios.get('/posts/');
+                commit('setPosts', response.data);
+            }
         }
     },
     

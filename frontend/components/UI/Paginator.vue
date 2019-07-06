@@ -41,7 +41,7 @@
             execute_pagination(to){  //to: 'next', 'previous' or Number
                 if (this.api === 'posts') {
                     if (typeof to === 'number') {
-                        const url = process.env.baseUrl + '/posts/' + `?p=${to}`;
+                        const url = '/posts/' + `?p=${to}`;
                         this.$store.dispatch('posts/getPostsOnPaginator', {context: this, url, page_number: to})
                     } else {
                         this.$store.dispatch('posts/getPostsOnPaginator', {
@@ -54,7 +54,7 @@
 
                 else if (this.api === 'tags') {
                     if (typeof to === 'number') {
-                        const url = process.env.baseUrl + '/tags/' + `?p=${to}`;
+                        const url = '/tags/' + `?p=${to}`;
                         this.$store.dispatch('tags/getTagsOnPaginator', {context: this, url, page_number: to})
                     } else {
                         this.$store.dispatch('tags/getTagsOnPaginator', {

@@ -30,7 +30,7 @@
         },
 
         created() {
-            this.$store.dispatch('tags/getTags', {context: this});
+            this.$store.dispatch('tags/getTags', this);
         },
 
         computed: {

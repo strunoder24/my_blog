@@ -6,13 +6,30 @@
                 <InputComponent v-model="title">
                     Заголовок
                 </InputComponent>
-                <md-field>
-                    <label for="language">Язык</label>
-                    <md-select v-model="language" id="language">
-                        <md-option value="en">Английский</md-option>
-                        <md-option value="ru">Русский</md-option>
-                    </md-select>
-                </md-field>
+                <div class="md-layout md-gutter">
+                    <div class="md-layout-item">
+                        <md-field>
+                            <label for="language">Язык</label>
+                            <md-select v-model="language" id="language">
+                                <md-option value="en">Английский</md-option>
+                                <md-option value="ru">Русский</md-option>
+                            </md-select>
+                        </md-field>
+                    </div>
+                    <div class="md-layout-item">
+                        <md-field>
+                            <label for="tags">Тэги</label>
+                            <md-select  v-model="tags" id="tags" multiple>
+                                <md-option
+                                        v-for="tag in available_tags"
+                                        :key="tag.id"
+                                        :value="tag.id"
+                                    >{{ tag.name }}
+                                </md-option>
+                            </md-select>
+                        </md-field>
+                    </div>
+                </div>
                 <md-checkbox v-model="is_published" value="true">
                     Опубликован
                 </md-checkbox>
@@ -34,15 +51,16 @@
                 is_published: false,
                 language: 'ru',
                 markdown: '',
-                tags: [1,3],
+                tags: [],
 
-                renderGranted: false //Чтобы данные не мелькали лишний раз при отсуствии доступа на раздел
+                renderGranted: false, //Чтобы данные не мелькали лишний раз при отсуствии доступа на раздел
             }
         },
 
         computed: {
             ...mapState({
-                users: state => state.accounts['user-info']
+                users: state => state.accounts['user-info'],
+                available_tags: state => state.tags.tags.results
             })
         },
 
@@ -72,6 +90,7 @@
             next(
                 async vm => {
                     await vm.$store.dispatch('accounts/getUserInfo', vm);
+                    await vm.$store.dispatch('tags/getTags', vm);
                     if (Object.keys(vm.users).length === 0) next('/admin');
                     else vm.renderGranted = true;
                 }
@@ -83,6 +102,7 @@
 <style lang="sass" scoped>
     .admin-wrapper
         flex: 1
+        padding-bottom: 30px
 
 
     .add-fields

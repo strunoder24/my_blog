@@ -78,8 +78,14 @@
         },
 
         methods: {
-            execute_delete(){
-                //
+            async execute_delete(){
+                try {
+                    await this.$axios.delete(`/posts/${this.deleted_post}/`);
+                    await this.$store.dispatch('posts/getPosts', this);
+                } catch (e) {
+                    console.log(e);
+                }
+                this.drop_delete_id()
             },
 
             drop_delete_id(){

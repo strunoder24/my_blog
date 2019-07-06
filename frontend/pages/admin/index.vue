@@ -1,7 +1,7 @@
 <template>
     <div v-if="renderGranted" class="admin-wrapper main-container md-layout" style="flex: 1">
         <login v-if="Object.keys(users).length === 0"></login>
-        <section class="admin-wrapper md-layout" v-else>
+        <section class="admin-wrapper" v-else>
             <ButtonsPanel />
             <PostsList :posts="posts.results" />
             <div class="pagination-container">
