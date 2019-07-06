@@ -33,6 +33,7 @@
                 <md-checkbox v-model="is_published" value="true">
                     Опубликован
                 </md-checkbox>
+                <ImageUploader />
             </div>
             <Markdown @saved="saved" v-model="markdown"/>
         </section>
@@ -41,6 +42,8 @@
 
 <script>
     import ButtonsPanel from '~/components/admin/ButtonsPanel.vue'
+    import ImageUploader from '~/components/UI/ImageUploader.vue'
+
     import Markdown from '~/components/admin/Markdown.vue'
     import { mapState } from 'vuex'
 
@@ -83,7 +86,8 @@
 
         components: {
             ButtonsPanel,
-            Markdown
+            Markdown,
+            ImageUploader
         },
 
         beforeRouteEnter(to, from, next) {

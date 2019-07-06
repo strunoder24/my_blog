@@ -6,18 +6,18 @@ from rest_framework import permissions
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
-from project.paginator import TagsPaginator
+from rest_framework.parsers import FileUploadParser, MultiPartParser
 from django.core.exceptions import ObjectDoesNotExist
-
 from django.contrib.auth import get_user_model, authenticate, login, logout
 import apps.api.permissions as localPermissions
 
 from apps.helpers.query_params import QueryParamsHelper
 from apps.helpers.viewsets_methods import Destroy
 
-from apps.api.models import Post, Comment, Tag
-
-from apps.api.serializers import UserSerializer, PostSerializer, CommentSerializer, TagSerializer
+from apps.api.models import Post, Comment, Tag, Image
+from apps.api.serializers import UserSerializer, PostSerializer, CommentSerializer, \
+                                 TagSerializer, ImageUploadSerialiser, ImagesSerializer
+from project.paginator import TagsPaginator
 
 
 class ApiVersions(APIView):
@@ -91,6 +91,33 @@ class UserViewSet(viewsets.ModelViewSet):
             return destroyer.destroy_multiple()
         else:
             return super().destroy(request)
+
+
+class ImageFileUploader(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    pagination_class = None
+    queryset = Image.objects.all()
+    serializer_class = ImageUploadSerialiser
+    parser_classes = (MultiPartParser, FileUploadParser,)
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        serializer.save(file=self.request.data.get('file'),
+                        size=serializer.validated_data['file'].size,
+                        name=serializer.validated_data['file'].name)
+
+
+class ImagesViewsSet(viewsets.ModelViewSet):
+    permission_classes = (AllowAny,)
+    queryset = Image.objects.all()
+    serializer_class = ImagesSerializer
 
 
 class PostViewSet(viewsets.ModelViewSet):

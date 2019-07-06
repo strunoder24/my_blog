@@ -1,7 +1,7 @@
 <template>
     <md-button
             md-with-hover
-            class="md-raised"
+            class="md-raised butt"
             :to="to"
             :class="['md-' + type]"
             @click="$emit('click')">
@@ -25,6 +25,10 @@
 </script>
 
 <style lang="sass" scoped>
+    .butt
+        margin: 0
+
+
     .md-add
         color: #fff !important
         background-color: #69f0ae !important

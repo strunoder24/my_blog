@@ -1,8 +1,9 @@
 from rest_framework import serializers
 from django.db import IntegrityError
+from django.conf import settings
 
 from django.contrib.auth import get_user_model
-from apps.api.models import Post, Comment, Tag
+from apps.api.models import Post, Comment, Tag, Image
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -55,6 +56,20 @@ class PostListSerializer(serializers.ModelSerializer):
         queryset = Comment.objects.filter(level=0, post=obj.id)
         serializer = CommentSerializer(instance=queryset, many=True)
         return serializer.data
+
+
+class ImageUploadSerialiser(serializers.ModelSerializer):
+    file = serializers.FileField(use_url=False, write_only=True)
+
+    class Meta:
+        model = Image
+        fields = '__all__'
+
+
+class ImagesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = '__all__'
 
 
 class PostSerializer(serializers.ModelSerializer):

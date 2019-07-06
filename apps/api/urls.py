@@ -4,10 +4,12 @@ from . import views
 
 urlpatterns = [
     path('', views.ApiRoot.as_view()),
-    path('signup/', views.UserViewSet.as_view({'post': 'create'})),
     path('logout/', views.LogoutView.as_view()),
     path('signin/', views.LoginView.as_view()),
     path('user-info/', views.UserInfo.as_view(), name='user-info'),
+    path('signup/', views.UserViewSet.as_view({
+        'post': 'create'
+    })),
     path('users/', views.UserViewSet.as_view({
         'get': 'list',
         'delete': 'destroy'
@@ -41,7 +43,14 @@ urlpatterns = [
     path('tags/<str:name>/', views.TagViewSet.as_view({
         'get': 'retrieve',
         'patch': 'partial_update',
-    }), name='tags-detail')
+    }), name='tags-detail'),
+    path('upload/', views.ImageFileUploader.as_view({
+        'post': 'create'
+    }), name='upload'),
+    path('images/', views.ImagesViewsSet.as_view({
+        'get': 'list'
+    }), name='upload'),
+
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
