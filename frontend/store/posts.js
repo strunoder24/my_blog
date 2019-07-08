@@ -1,11 +1,16 @@
 export const state = () => ({
-    posts: {}
+    posts: {},
+    images: {},
 });
 
 
 export const mutations = {
     setPosts(state, posts) {
         state.posts = posts;
+    },
+    
+    setImages(state, images) {
+        state.images = images;
     },
 };
 
@@ -29,6 +34,26 @@ export const actions = {
             const response = await context.$axios.get(url);
             commit('setPosts', response.data);
             context.$router.replace({query: {p: page_number}})
+        } catch (e) {
+            console.log(e);
+        }
+    },
+    
+    
+    async getImages({commit}, context) {
+        try {
+            const url = '/images/';
+            const response = await context.$axios.get(url);
+            commit('setImages', response.data);
+        } catch (e) {
+            console.log(e);
+        }
+    },
+    
+    async getImagesOnPaginator({commit}, { context, url, page_number }) {
+        try {
+            const response = await context.$axios.get(url);
+            commit('setImages', response.data);
         } catch (e) {
             console.log(e);
         }

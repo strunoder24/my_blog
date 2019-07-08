@@ -15,17 +15,20 @@
         <div class="markdown-footer">
             <Button
                     @click="$emit('saved')"
+                    style="margin: 8px"
                     type="add"
                 >Сохранить
             </Button>
             <Button
                     type="primary"
+                    style="margin: 8px"
                     v-if="preview"
                     @click="preview = false"
                 >Редактировать
             </Button>
             <Button
                     type="primary"
+                    style="margin: 8px"
                     v-if="!preview"
                     @click="preview = true"
                 >Предпросмотр

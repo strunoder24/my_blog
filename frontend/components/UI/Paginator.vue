@@ -34,6 +34,11 @@
             api: {
                 type: String,
                 required: true
+            },
+
+            p: { //Только для медиатеки
+                type: Number,
+                required: false
             }
         },
 
@@ -62,6 +67,21 @@
                             url: this.info[to],
                             page_number: to === 'next' ? this.info.current_page + 1 : this.info.current_page - 1
                         })
+                    }
+                }
+
+                else if (this.api === 'images') {
+                    if (typeof to === 'number') {
+                        const url = '/images/' + `?p=${to}`;
+                        this.$store.dispatch('posts/getImagesOnPaginator', {context: this, url, page_number: to});
+                        this.$emit('changePage', to)
+                    } else {
+                        this.$store.dispatch('posts/getImagesOnPaginator', {
+                            context: this,
+                            url: this.info[to],
+                            page_number: to === 'next' ? this.p + 1 : this.p - 1
+                        });
+                        this.$emit('changePage', to === 'next' ? this.p + 1 : this.p - 1)
                     }
                 }
             }

@@ -43,14 +43,20 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'create_date', 'edit_date')
 
 
+class ImagesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = '__all__'
+
+
 class PostListSerializer(serializers.ModelSerializer):
     comments = serializers.SerializerMethodField()
+    main_image = ImagesSerializer()
     tags = TagSerializer(many=True)
 
     class Meta:
         model = Post
         fields = '__all__'
-        read_only_fields = ('author', 'create_date', 'edit_date', 'likes')
 
     def get_comments(self, obj):
         queryset = Comment.objects.filter(level=0, post=obj.id)
@@ -59,14 +65,8 @@ class PostListSerializer(serializers.ModelSerializer):
 
 
 class ImageUploadSerialiser(serializers.ModelSerializer):
-    file = serializers.FileField(use_url=False, write_only=True)
+    file = serializers.FileField(use_url=False, write_only=False)
 
-    class Meta:
-        model = Image
-        fields = '__all__'
-
-
-class ImagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         fields = '__all__'

@@ -8,7 +8,7 @@
             <h1 class="post-title" :title="post.title">
                 {{ post.title }}
             </h1>
-            <img class="post-content" :src="post.main_image">
+            <img class="post-content" :src="get_image(post)">
             <div class="post-controls">
                 <Button
                         type="accent"
@@ -78,6 +78,13 @@
         },
 
         methods: {
+            get_image(post){
+                if (post.main_image && post.main_image.file) {
+                    return process.env.postListImageUrl + post.main_image.file
+                }
+                return ''
+            },
+
             async execute_delete(){
                 try {
                     await this.$axios.delete(`/posts/${this.deleted_post}/`);

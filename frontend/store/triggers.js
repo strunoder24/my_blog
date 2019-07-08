@@ -5,5 +5,5 @@ export const state = () => ({
 export const mutations = {
     triggerCreateTag(state) {
         state.createTag = Math.random();
-    }
+    },
 };

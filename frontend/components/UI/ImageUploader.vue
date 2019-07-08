@@ -1,19 +1,38 @@
 <template>
-    <div>
-        <input type="file"
+    <div class="image-uploader-wrapper">
+        <div class="uploader-buttons">
+            <input type="file"
                id="uploadImages"
                @change="uploader"
                hidden>
-        <Button @click="uploadButton">Загрузить</Button>
+            <h2>Загрузить заглавную картинку</h2>
+            <Button @click="uploadButton" style="margin-right: 15px;">Загрузить</Button>
+            <Button @click="showMediateka = true">Выбрать из медиатеки</Button>
+            <MediatekaPopup
+                    v-if="showMediateka"
+                    @close="showMediateka = false"
+                    @imagePicked="(imageData) => {
+                        this.uploadedImage = imageData;
+                        this.sendSignalToForm()
+                    }" />
+        </div>
+        <img class="loaded-image" :src="uploadedImage.src">
     </div>
 </template>
 
 <script>
+    import MediatekaPopup from '~/components/UI/MediatekaPopup.vue'
+
     export default {
         data(){
             return {
                 imageOnload: {},
-                uploadProgress: 0
+                uploadProgress: 0,
+                uploadedImage: {
+                    id: 0,
+                    src: '',
+                },
+                showMediateka: false
             }
         },
 
@@ -47,16 +66,43 @@
                 const data = new FormData();
                 data.append('file', this.imagesOnload.file);
                 this.$axios.post(`/upload/`, data, forPost)
-                    .then(() => {
-                        this.uploadProgress = 0
+                    .then(({ data }) => {
+                        this.uploadedImage.id = data.id;
+                        this.uploadedImage.src = process.env.uploadUrl + data.file;
+                        this.sendSignalToForm();
+                        this.clear_after_load();
                     })
                     .catch((error) => {
                         console.log(error);
                     })
             },
+
+            sendSignalToForm(){
+                this.$emit('imageLoaded', this.uploadedImage.id)
+            },
+
+            clear_after_load() {
+                this.uploadProgress = 0;
+                this.imagesOnload = {};
+            }
+        },
+
+        components: {
+            MediatekaPopup
         }
     }
 </script>
 
 <style lang="sass" scoped>
+    .image-uploader-wrapper
+        display: block
+        padding-bottom: 15px
+
+
+    .uploader-buttons
+        padding-bottom: 15px
+
+
+    .loaded-image
+        width: 600px
 </style>

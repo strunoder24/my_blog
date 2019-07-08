@@ -33,7 +33,7 @@
                 <md-checkbox v-model="is_published" value="true">
                     Опубликован
                 </md-checkbox>
-                <ImageUploader />
+                <ImageUploader @imageLoaded="image = $event"/>
             </div>
             <Markdown @saved="saved" v-model="markdown"/>
         </section>
@@ -54,6 +54,7 @@
                 is_published: false,
                 language: 'ru',
                 markdown: '',
+                image: 0,
                 tags: [],
 
                 renderGranted: false, //Чтобы данные не мелькали лишний раз при отсуствии доступа на раздел
@@ -75,6 +76,7 @@
                         is_published: this.is_published,
                         language: this.language,
                         markdown: this.markdown,
+                        main_image: this.image,
                         tags: this.tags
                     });
                     this.$router.push('/admin')

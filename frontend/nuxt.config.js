@@ -79,7 +79,9 @@ module.exports = {
     },
     
     env: {
-        baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/v1' : 'none'
+        baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/v1' : 'none',
+        uploadUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8000/uploads/' : 'none',
+        postListImageUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'none',
     },
 };
 

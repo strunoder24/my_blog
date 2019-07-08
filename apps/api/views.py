@@ -115,8 +115,9 @@ class ImageFileUploader(viewsets.ModelViewSet):
 
 
 class ImagesViewsSet(viewsets.ModelViewSet):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Image.objects.all()
+    pagination_class = TagsPaginator
     serializer_class = ImagesSerializer
 
 
