@@ -21,7 +21,7 @@
                         v-on-clickaway="drop_delete_id"
                         v-if="deleted_post === post.id">
                     Вы уверены?
-                    <md-button class="md-icon-button md-raised md-accent" @click="execute_delete">
+                    <md-button class="md-icon-button md-raised md-accent" @click="execute_delete(post.id)">
                         <md-icon>check</md-icon>
                     </md-button>
                     <md-button class="md-icon-button md-raised" @click="deleted_post = 0">
@@ -35,12 +35,15 @@
                     </md-speed-dial-target>
 
                     <md-speed-dial-content>
-                        <md-button class="md-icon-button">
-                            <md-icon>{{ post.is_published ? 'star' : 'star_border' }}</md-icon>
+                        <md-button class="md-icon-button" @click="publication_status(post)">
+                            <md-icon
+                                    :class="{'md-primary': post.is_published}"
+                                >{{ post.is_published ? 'star' : 'star_border' }}
+                            </md-icon>
                             <md-tooltip>{{ post.is_published ? 'Убрать из публикации' : 'Опубликовать' }}</md-tooltip>
                         </md-button>
 
-                        <md-button class="md-icon-button">
+                        <md-button class="md-icon-button" @click="$router.push({name: 'admin-edit-id', params: {id: post.id}})">
                             <md-icon>edit</md-icon>
                             <md-tooltip>Редактировать</md-tooltip>
                         </md-button>
@@ -85,14 +88,13 @@
                 return ''
             },
 
-            async execute_delete(){
-                try {
-                    await this.$axios.delete(`/posts/${this.deleted_post}/`);
-                    await this.$store.dispatch('posts/getPosts', this);
-                } catch (e) {
-                    console.log(e);
-                }
+            async execute_delete(id){
+                await this.$store.dispatch('posts/deletePost', {context: this, id});
                 this.drop_delete_id()
+            },
+
+            async publication_status(post) {
+                await this.$store.dispatch('posts/publicPostStatus', {context: this, post});
             },
 
             drop_delete_id(){
@@ -104,37 +106,35 @@
 
 <style lang="sass" scoped>
     .post-list
-        display: flex
-        flex-wrap: wrap
-        margin: -15px
+        display: grid
+        grid-template: repeat(auto-fill, 400px) / repeat(auto-fill, minmax(300px, 1fr))
+        grid-gap: 15px
 
 
     .post-container
         display: flex
         flex-direction: column
-        margin: 15px
-        height: 300px
-        width: 300px
+        height: 400px
+        width: 100%
         padding: 15px
         cursor: default
 
 
     .post-title
         margin-top: 0
-        max-height: 64px
+        max-height: 57px
         overflow: hidden
         line-height: 1.3
 
 
 
     .post-content
-        height: 150px
-
+        max-height: 230px
 
 
     .post-dial
         position: absolute
-        top: -108px
+        top: -112px
         right: 0
 
 

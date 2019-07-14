@@ -16,6 +16,7 @@
     "@nuxtjs/axios": "^5.5.1",
     "@nuxtjs/markdownit": "^1.2.5",
     "cookie-universal-nuxt": "^2.0.14",
+    "lodash": "^4.17.14",
     "node-sass": "^4.11.0",
     "nuxt": "^2.7.1",
     "sass-loader": "^7.1.0",

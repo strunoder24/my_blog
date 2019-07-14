@@ -30,12 +30,12 @@
                         </md-field>
                     </div>
                 </div>
-                <md-checkbox v-model="is_published" value="true">
+                <md-checkbox v-model="is_published">
                     Опубликован
                 </md-checkbox>
-                <ImageUploader @imageLoaded="image = $event"/>
+                <ImageUploader :image="image" @imageLoaded="image = $event"/>
             </div>
-            <Markdown @saved="saved" v-model="markdown"/>
+            <Markdown @saved="save" v-model="markdown"/>
         </section>
     </div>
 </template>
@@ -61,6 +61,10 @@
             }
         },
 
+        created(){
+            this.init()
+        },
+
         computed: {
             ...mapState({
                 users: state => state.accounts['user-info'],
@@ -69,9 +73,26 @@
         },
 
         methods: {
-            async saved() {
+            async init(){
                 try {
-                    const response = await this.$axios.post(`${process.env.baseUrl}/posts/`, {
+                    const { data } = await this.$axios.get(`/posts/${this.$route.params.id}`);
+                    this.title = data.title;
+                    this.is_published = data.is_published;
+                    this.language = data.lang;
+                    this.markdown = data.markdown;
+                    this.image = data.main_image.id;
+                    this.tags = data.tags.map((obj) => {
+                            return obj.id
+                        })
+                } catch (e) {
+                    console.log(e);
+                }
+            },
+
+
+            async save() {
+                try {
+                    const response = await this.$axios.patch(`/posts/${this.$route.params.id}/`, {
                         title: this.title,
                         is_published: this.is_published,
                         lang: this.language,

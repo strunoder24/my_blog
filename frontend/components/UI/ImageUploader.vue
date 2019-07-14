@@ -24,6 +24,13 @@
     import MediatekaPopup from '~/components/UI/MediatekaPopup.vue'
 
     export default {
+        props: {
+            image: {
+                type: Number,
+                required: false
+            }
+        },
+
         data(){
             return {
                 imageOnload: {},
@@ -36,7 +43,23 @@
             }
         },
 
+        mounted(){
+            if (this.image) this.getExistingImage();
+        },
+
+        watch: {
+            image: function () {
+                if (this.uploadedImage === 0) this.getExistingImage()
+            }
+        },
+
         methods: {
+            async getExistingImage(){
+                let { data } = await this.$axios.get('/images/' + this.image + '/');
+                this.uploadedImage.id = data.id;
+                this.uploadedImage.src = data.file;
+            },
+
             uploadButton(){
                 const input = document.querySelector('#uploadImages');
                 input.click()

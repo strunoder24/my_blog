@@ -122,9 +122,14 @@ class ImagesViewsSet(viewsets.ModelViewSet):
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def get_queryset(self):
+        if self.request.query_params.get('is_published'):
+            return Post.objects.filter(is_published=True)
+        else:
+            return Post.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

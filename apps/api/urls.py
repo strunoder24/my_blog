@@ -25,6 +25,7 @@ urlpatterns = [
     }), name='posts-list'),
     path('posts/<int:pk>/', views.PostViewSet.as_view({
         'get': 'retrieve',
+        'patch': 'partial_update',
         'delete': 'destroy'
     }), name='posts-detail'),
     path('comments/', views.CommentViewSet.as_view({
@@ -49,6 +50,9 @@ urlpatterns = [
     }), name='upload'),
     path('images/', views.ImagesViewsSet.as_view({
         'get': 'list'
+    }), name='upload'),
+    path('images/<int:pk>/', views.ImagesViewsSet.as_view({
+        'get': 'retrieve',
     }), name='upload'),
 
 ]

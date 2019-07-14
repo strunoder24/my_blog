@@ -6,31 +6,14 @@ export const actions = {
     async getPostsOnRender({ commit }, context){
         try {
             const response = await context.app.$axios.get('/posts/' +
-                                                         (context.query.p ? `?p=${context.query.p}` : ''));
+                                                         (context.query.p ?
+                                                             `?p=${context.query.p}&is_published=true`
+                                                             : '?is_published=true'));
             commit('posts/setPosts', response.data);
         } catch (e) {
             if (e.response.status === 404 && context.query.p) {
-                const response = await context.app.$axios.get('/posts/');
-                commit('posts/setPosts', response.data);
+                const response = await context.app.$axios.get('/posts/?is_published=true');
             }
         }
-        
-        // Тоже самое но на промисвх
-        // return context.app.$axios
-        //     .get('/posts/' + (context.query.p ? `?p=${context.query.p}` : ''))
-        //     .then(response => {
-        //         commit('posts/setPosts', response.data)
-        //     })
-        //     .catch(e => {
-        //         if (e.response) {
-        //             if (e.response.status === 404 && context.query.p) { // Если страница пагинатора косячная,
-        //                 return context.app.$axios                       // то запрашивай по умолчанию
-        //                     .get('/posts/')
-        //                     .then(response => {
-        //                         commit('posts/setPosts', response.data);
-        //                     })
-        //             }
-        //         }
-        //     })
     },
 };

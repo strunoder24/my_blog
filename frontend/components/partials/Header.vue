@@ -1,7 +1,7 @@
 <template>
     <header class="md-layout md-alignment-center header md-elevation-2">
         <div class="md-layout inner-layout" v-if="!show_drawer">
-            <div class="logo-container">
+            <div class="logo-container" @click="getPublished">
                 <router-link to="/" class="logo-text">Блог разработчика</router-link>
             </div>
             <div class="md-layout-item">
@@ -15,7 +15,7 @@
             <md-button class="md-icon-button" @click="showNavigation = true">
                 <md-icon class="md-size" style="font-size: 27px !important;">menu</md-icon>
             </md-button>
-            <div class="logo-container">
+            <div class="logo-container" @click="getPublished">
                 <router-link to="/" class="logo-text">Блог разработчика</router-link>
             </div>
             <md-drawer :md-active.sync="showNavigation" md-swipeable>
@@ -70,6 +70,10 @@
         methods: {
             resize(width){
                 this.show_drawer = width < 1000
+            },
+
+            async getPublished(){
+                await this.$store.dispatch('posts/getPublishedPosts', this);
             },
         },
     }
