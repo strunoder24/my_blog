@@ -30,12 +30,18 @@
                         </md-field>
                     </div>
                 </div>
-                <md-checkbox v-model="is_published" value="true">
+                <md-checkbox v-model="is_published">
                     Опубликован
                 </md-checkbox>
                 <ImageUploader @imageLoaded="image = $event"/>
             </div>
-            <Markdown @saved="saved" v-model="markdown"/>
+            <h1>Превью поста</h1>
+            <textarea class="preview-text md-elevation-2"
+                      maxlength="500"
+                      v-model="preview_text"
+            ></textarea>
+            <h1>Текст поста</h1>
+            <Markdown @saved="save" v-model="markdown"/>
         </section>
     </div>
 </template>
@@ -54,6 +60,7 @@
                 is_published: false,
                 language: 'ru',
                 markdown: '',
+                preview_text: '',
                 image: 0,
                 tags: [],
 
@@ -69,12 +76,13 @@
         },
 
         methods: {
-            async saved() {
+            async save() {
                 try {
                     const response = await this.$axios.post(`${process.env.baseUrl}/posts/`, {
                         title: this.title,
                         is_published: this.is_published,
                         lang: this.language,
+                        preview_text: this.preview_text,
                         markdown: this.markdown,
                         main_image: this.image,
                         tags: this.tags
@@ -109,5 +117,15 @@
     .admin-wrapper
         flex: 1
         padding-bottom: 30px
+
+
+    .preview-text
+        width: 100%
+        margin-bottom: 20px
+        resize: none
+        padding: 10px
+        font-size: 16px
+        height: 150px
+        border: none
 </style>
 

@@ -35,6 +35,12 @@
                 </md-checkbox>
                 <ImageUploader :image="image" @imageLoaded="image = $event"/>
             </div>
+            <h1>Превью поста</h1>
+            <textarea class="preview-text md-elevation-2"
+                      maxlength="500"
+                      v-model="preview_text"
+            ></textarea>
+            <h1>Текст поста</h1>
             <Markdown @saved="save" v-model="markdown"/>
         </section>
     </div>
@@ -54,6 +60,7 @@
                 is_published: false,
                 language: 'ru',
                 markdown: '',
+                preview_text: '',
                 image: 0,
                 tags: [],
 
@@ -81,6 +88,7 @@
                     this.language = data.lang;
                     this.markdown = data.markdown;
                     this.image = data.main_image.id;
+                    this.preview_text = data.preview_text;
                     this.tags = data.tags.map((obj) => {
                             return obj.id
                         })
@@ -96,6 +104,7 @@
                         title: this.title,
                         is_published: this.is_published,
                         lang: this.language,
+                        preview_text: this.preview_text,
                         markdown: this.markdown,
                         main_image: this.image,
                         tags: this.tags
@@ -130,5 +139,15 @@
     .admin-wrapper
         flex: 1
         padding-bottom: 30px
+
+
+    .preview-text
+        width: 100%
+        margin-bottom: 20px
+        resize: none
+        padding: 10px
+        font-size: 16px
+        height: 150px
+        border: none
 </style>
 

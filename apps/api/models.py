@@ -30,6 +30,7 @@ class Image(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=100, default='')
     markdown = models.TextField()
+    preview_text = models.CharField(max_length=500, blank=True)
     lang = models.CharField(choices=[('en', 'english'), ('ru', 'russian')], default='ru', max_length=100)
     likes = models.PositiveIntegerField(default=0)
     main_image = models.ForeignKey(Image, related_name='post', blank=True, null=True, on_delete=models.SET_NULL)

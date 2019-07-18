@@ -50,6 +50,15 @@ class ImagesSerializer(serializers.ModelSerializer):
 
 
 class PostListSerializer(serializers.ModelSerializer):
+    main_image = ImagesSerializer()
+    tags = TagSerializer(many=True)
+
+    class Meta:
+        model = Post
+        fields = '__all__'
+
+
+class SinglePostSerializer(serializers.ModelSerializer):
     comments = serializers.SerializerMethodField()
     main_image = ImagesSerializer()
     tags = TagSerializer(many=True)

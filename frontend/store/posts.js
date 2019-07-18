@@ -2,7 +2,7 @@ import vue from 'vue'
 
 export const state = () => ({
     posts: {},
-    published_posts: {},
+    post: {},
     images: {},
 });
 
@@ -10,6 +10,10 @@ export const state = () => ({
 export const mutations = {
     setPosts(state, posts) {
         state.posts = posts;
+    },
+    
+    setPost(state, post) {
+        state.post = post;
     },
     
     deletePost(state, id) {
@@ -37,6 +41,16 @@ export const mutations = {
 
 
 export const actions = {
+    async getPublishedPost({commit}, context){
+        try {
+            const url = '/posts/' + context.route.params.id + '/?is_published=true';
+            const response = await context.$axios.get(url);
+            commit('setPost', response.data);
+        } catch (e) {
+            console.log(e);
+        }
+    },
+    
     async getPosts({commit}, context) {
         try {
             const url = '/posts/' + (context.$route.query.p ? `?p=${context.$route.query.p}` : '');

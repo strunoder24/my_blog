@@ -59,6 +59,11 @@
                 this.toList = true;
             }
 
+            else if (this.$route.name === 'admin-edit-id') {
+                this.header = 'Редактирование поста';
+                this.toList = true;
+            }
+
             else if (this.$route.name === 'admin-tags') {
                 this.header = 'Настройка тегов';
                 this.createTag = true;

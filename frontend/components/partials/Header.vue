@@ -83,6 +83,7 @@
     .header
         background-color: #efefef
         height: 80px
+        min-height: 80px
 
 
 

@@ -5,10 +5,15 @@
                 class="post-container"
                 v-for="post in posts"
                 :key="post.id">
-            <h1 class="post-title" :title="post.title">
-                {{ post.title }}
-            </h1>
+            <router-link class="post-title ellipsis"
+                         :to="{name: 'admin-edit-id', params: {id: post.id}}"
+                         :title="post.title"
+                >{{ post.title }}
+            </router-link>
             <img class="post-content" :src="get_image(post)">
+            <div class="preview-on-post">
+                {{ post.preview_text }}
+            </div>
             <div class="post-controls">
                 <Button
                         type="accent"
@@ -119,17 +124,33 @@
         padding: 15px
         cursor: default
 
+        a
+            text-decoration: none
+            transition: color linear .2s
+            color: #000
+
+            &:hover
+                    color: blue
+
 
     .post-title
         margin-top: 0
-        max-height: 57px
+        height: 33px
+        min-height: 33px
+        font-size: 26px
         overflow: hidden
-        line-height: 1.3
-
+        line-height: 1
+        font-weight: 600
+        margin-bottom: 10px
 
 
     .post-content
         max-height: 230px
+
+
+    .preview-on-post
+        padding: 5px 0
+        overflow: hidden
 
 
     .post-dial
@@ -144,6 +165,7 @@
         display: flex
         width: 100%
         height: 48px
+        padding-top: 10px
         margin-top: auto
 
 
