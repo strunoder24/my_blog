@@ -1,5 +1,5 @@
 <template>
-    <header class="md-layout md-alignment-center header md-elevation-2">
+    <header class="md-layout md-alignment-center md-elevation-2">
         <div class="md-layout inner-layout" v-if="!show_drawer">
             <div class="logo-container" @click="getPublished">
                 <router-link to="/" class="logo-text">Блог разработчика</router-link>
@@ -18,31 +18,36 @@
             <div class="logo-container" @click="getPublished">
                 <router-link to="/" class="logo-text">Блог разработчика</router-link>
             </div>
-            <md-drawer :md-active.sync="showNavigation" md-swipeable>
-            <md-toolbar class="md-transparent drawer-container" md-elevation="0">
-                <span>Блог разработчика</span>
-            </md-toolbar>
+            <md-drawer :md-active.sync="showNavigation" md-swipeable style="position: fixed">
+                <md-toolbar class="md-transparent drawer-container" md-elevation="0" s>
+                    <span>Блог разработчика</span>
+                </md-toolbar>
 
-            <md-list @click="showNavigation = false">
-                <md-list-item to="about">
-                    <span class="md-list-item-text">Обо мне</span>
-                </md-list-item>
-                <md-list-item to="services">
-                    <span class="md-list-item-text">Услуги</span>
-                </md-list-item>
-                <md-list-item to="projects">
-                    <span class="md-list-item-text">Портфолио</span>
-                </md-list-item>
-                <md-list-item to="contacts">
-                    <span class="md-list-item-text">Контакты</span>
-                </md-list-item>
-            </md-list>
-        </md-drawer>
+                <md-list @click="showNavigation = false">
+                    <md-list-item to="about">
+                        <span class="md-list-item-text">Обо мне</span>
+                    </md-list-item>
+                    <md-list-item to="services">
+                        <span class="md-list-item-text">Услуги</span>
+                    </md-list-item>
+                    <md-list-item to="projects">
+                        <span class="md-list-item-text">Портфолио</span>
+                    </md-list-item>
+                    <md-list-item to="contacts">
+                        <span class="md-list-item-text">Контакты</span>
+                    </md-list-item>
+                </md-list>
+                <md-divider></md-divider>
+                <PopularTags insideHeader/>
+            </md-drawer>
         </div>
     </header>
 </template>
 
 <script>
+    import PopularTags from '~/components/partials/PopularTags.vue'
+
+
     export default {
         data: function () {
             return {
@@ -64,6 +69,16 @@
         watch: {
             '$route': function () {
                 this.current_place = this.$route.name
+            },
+
+            showNavigation: function () {
+                this.$nextTick(()=> { //для более красивого фиксированного оверлея. Через css не работает.
+                    const overlay = document.getElementsByClassName('md-overlay')[0];
+                    if (overlay) overlay.style.position = 'fixed';
+                });
+
+                if (this.showNavigation) document.body.style.overflow = 'hidden';
+                else document.body.style.overflow = 'auto';
             }
         },
 
@@ -76,14 +91,23 @@
                 await this.$store.dispatch('posts/getPublishedPosts', this);
             },
         },
+
+        components: {
+            PopularTags,
+        }
     }
 </script>
 
 <style lang="sass" scoped>
-    .header
+    header
+        position: fixed
+        top: 0
+        left: 0
         background-color: #efefef
         height: 80px
         min-height: 80px
+        width: 100%
+        z-index: 100
 
 
 

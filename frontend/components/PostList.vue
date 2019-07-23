@@ -5,9 +5,8 @@
                 v-for="post in posts"
                 :key="post.id"
             ><div class="post-header">
-                <router-link
-                        :to="{name: 'post-id', params: {id: post.id}}"
-                    >{{ post.title }}
+                <router-link :to="{name: 'post-id', params: {id: post.id}}">
+                    {{ post.title }}
                 </router-link>
                 <div class="post-created-date">
                     {{ date_parser(post.create_date) }}
@@ -18,12 +17,21 @@
                         href="#"
                         v-for="tag in post.tags"
                         :key="tag.id"
-                    >{{ tag.name }}</a>
+                    >{{ tag.name }}
+                </a>
             </div>
             <img
                     class="main-image"
                     :src="get_image(post)"
                     alt="Заглавная картинка поста">
+            <div class="preview-text">{{post.preview_text}}</div>
+            <div class="controls">
+                <router-link
+                        :to="{name: 'post-id', params: {id: post.id}}"
+                        class="read-next"
+                    >Читать далее
+                </router-link>
+            </div>
         </md-card>
     </div>
 </template>
@@ -54,7 +62,7 @@
 <style lang="sass" scoped>
     .post
         width: 100%
-        padding: 20px
+        padding: 20px 20px 0
         margin-bottom: 10px
 
 
@@ -97,4 +105,20 @@
 
     .main-image
         width: 100%
+
+
+    .preview-text
+        font-size: 16px
+        margin: 10px 0
+
+
+    .controls
+        display: flex
+        height: 26px
+        width: 100%
+
+    .read-next
+        margin-left: auto
+        font-size: 16px
+        cursor: pointer
 </style>

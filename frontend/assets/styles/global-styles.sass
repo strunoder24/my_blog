@@ -26,18 +26,26 @@ html, body
 
 
 .md-tooltip
-        padding-top: 1px
-        font-size: 16px
-        font-weight: 600 !important
+    padding-top: 1px
+    font-size: 16px
+    font-weight: 600 !important
 
-        @media (min-width: 1000px)
-            height: 25px !important
+    @media (min-width: 1000px)
+        height: 25px !important
 
 
 
 .main-container
-        @media (min-width: 1000px)
-            margin: 0 62px
+    max-width: 1200px
+    margin: 0 auto
 
-        @media (max-width: 999px)
-            margin: 0 25px
+    @media (min-width: 1000px) and (max-width: 1315px)
+        margin: 0 62px
+
+    @media (max-width: 999px)
+        margin: 0 25px
+
+
+
+.admin-wrapper
+    margin: 0 62px

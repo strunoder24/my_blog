@@ -4,7 +4,7 @@
             <PostList :posts="posts.results"></PostList>
         </div>
         <div class="tags-wrapper">
-            <md-card class="tags-container"></md-card>
+            <PopularTags/>
         </div>
         <div class="paginator-container">
             <Paginator
@@ -17,6 +17,7 @@
 <script>
     import { mapState } from 'vuex'
     import PostList from '~/components/PostList.vue'
+    import PopularTags from '~/components/partials/PopularTags.vue'
 
     export default {
         computed: {
@@ -26,8 +27,9 @@
         },
 
         components: {
-            PostList
-        }
+            PostList,
+            PopularTags
+        },
     }
 </script>
 
@@ -37,7 +39,7 @@
         grid-gap: 10px
         padding: 10px 0
         grid-template-areas: "c c c s" "c c c s" "p p p p"
-        grid-template-columns: 1fr 1fr 1fr 1fr
+        grid-template-columns: 1fr 1fr 1fr 1.2fr
 
         @media (max-width: 999px)
             grid-template-areas: "c c c c" "c c c c" "p p p p"
@@ -49,13 +51,8 @@
 
 
     .tags-wrapper
+        position: relative
         grid-area: s
-        width: 100%
-
-
-    .tags-container
-        padding: 15px
-
 
         @media (max-width: 999px)
             display: none
@@ -63,4 +60,5 @@
 
     .paginator-container
         grid-area: p
+
 </style>
