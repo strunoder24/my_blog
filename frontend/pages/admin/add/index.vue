@@ -127,5 +127,6 @@
         font-size: 16px
         height: 150px
         border: none
+        font-family: Lora, sans-serif
 </style>
 

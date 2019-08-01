@@ -62,7 +62,7 @@
 <style lang="sass" scoped>
     .post
         width: 100%
-        padding: 20px 20px 0
+        padding: 20px 20px 10px
         margin-bottom: 10px
 
 
@@ -74,7 +74,7 @@
             margin: 0
             line-height: 1
             color: #000
-            font-size: 26px
+            font-size: 2em
             font-weight: 600
             text-decoration: none
 
@@ -83,6 +83,7 @@
     .post-created-date
         margin-left: auto
         font-size: 16px
+        font-family: Lora, sans-serif
 
 
 
@@ -98,6 +99,7 @@
             font-size: 18px
             text-decoration: none
             transition: color linear .2s
+            font-family: Lora, sans-serif
 
             &:hover
                 color: blue
@@ -110,6 +112,7 @@
     .preview-text
         font-size: 16px
         margin: 10px 0
+        font-family: Lora, sans-serif
 
 
     .controls
@@ -121,4 +124,5 @@
         margin-left: auto
         font-size: 16px
         cursor: pointer
+        font-family: Lora, sans-serif
 </style>

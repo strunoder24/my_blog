@@ -151,6 +151,7 @@
     .preview-on-post
         padding: 5px 0
         overflow: hidden
+        font-family: Lora, sans-serif
 
 
     .post-dial
@@ -165,7 +166,7 @@
         display: flex
         width: 100%
         height: 48px
-        padding-top: 10px
+        padding-top: 12px
         margin-top: auto
 
 

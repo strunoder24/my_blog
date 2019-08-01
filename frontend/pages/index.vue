@@ -8,6 +8,7 @@
         </div>
         <div class="paginator-container">
             <Paginator
+                        v-if="posts.pages_count > 1"
                         :info="posts"
                         :api="'posts'"/>
         </div>
