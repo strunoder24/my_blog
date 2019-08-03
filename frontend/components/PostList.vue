@@ -13,12 +13,12 @@
                 </div>
             </div>
             <div class="tags-container">
-                <a
-                        href="#"
+                <router-link
+                        :to="{name: 'index', query: {t: tag.name}}"
                         v-for="tag in post.tags"
                         :key="tag.id"
                     >{{ tag.name }}
-                </a>
+                </router-link>
             </div>
             <img
                     class="main-image"

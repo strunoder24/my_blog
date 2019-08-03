@@ -43,7 +43,7 @@ class Post(models.Model):
         return self.title
 
     class Meta:
-        ordering = ('create_date',)
+        ordering = ('-create_date',)
 
 
 class Comment(MPTTModel, models.Model):

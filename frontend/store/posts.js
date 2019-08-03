@@ -64,6 +64,16 @@ export const actions = {
         }
     },
     
+    async getPostsOnTags({commit}, context) {
+        try {
+            const url = '/posts/' + `?p=1&t=${context.$route.query.t}&is_published=true`;
+            const response = await context.$axios.get(url);
+            commit('setPosts', response.data);
+        } catch (e) {
+            // Ты в дерьме
+        }
+    },
+    
     async getPublishedPosts({commit}, context){
         try {
             const url = '/posts/' + (context.$route.query.p ?

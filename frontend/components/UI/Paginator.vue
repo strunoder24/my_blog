@@ -55,17 +55,15 @@
                             page_number: to === 'next' ? this.info.current_page + 1 : this.info.current_page - 1
                         })
                     }
-                }
-
-                else if (this.api === 'tags') {
+                } else if (this.api === 'tags') {
                     if (typeof to === 'number') {
-                        const url = '/tags/' + `?p=${to}`;
+                        const url = `/tags/?p=${to}&is_admin=true`;
                         this.$store.dispatch('tags/getTagsOnPaginator', {context: this, url, page_number: to})
                     } else {
                         this.$store.dispatch('tags/getTagsOnPaginator', {
                             context: this,
                             url: this.info[to],
-                            page_number: to === 'next' ? this.info.current_page + 1 : this.info.current_page - 1
+                            page_number: to === 'next' ? this.info.current_page + 1 : this.info.current_page - 1,
                         })
                     }
                 }

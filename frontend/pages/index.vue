@@ -1,6 +1,10 @@
 <template>
     <div class="main-container">
         <div class="content">
+            <md-card class="tag-results" v-if="$route.query.t">
+                <h1>Результаты по тегу: {{ $route.query.t }}</h1>
+                <Button @click="toAllPosts">Вернутся к списку постов</Button>
+            </md-card>
             <PostList :posts="posts.results"></PostList>
         </div>
         <div class="tags-wrapper">
@@ -27,6 +31,27 @@
             })
         },
 
+        mounted() {
+            if (this.$route.query.t) {
+                this.$store.dispatch('posts/getPostsOnTags', this)
+            }
+        },
+
+        watch: {
+            $route: function () {
+                if (this.$route.query.t) {
+                    this.$store.dispatch('posts/getPostsOnTags', this)
+                }
+            }
+        },
+
+        methods: {
+            toAllPosts(){
+                this.$router.replace({query: {}});
+                this.$store.dispatch('posts/getPosts', this)
+            }
+        },
+
         components: {
             PostList,
             PopularTags
@@ -49,6 +74,11 @@
     .content
         grid-area: c
         max-width: 100%
+
+
+    .tag-results
+        padding: 20px
+        margin-bottom: 20px
 
 
     .tags-wrapper

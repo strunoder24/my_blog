@@ -26,8 +26,22 @@ export const mutations = {
 export const actions = {
     async getTags({commit}, context){
         try {
-            const response = await context.$axios.get('/tags/' +
-                                                      (context.$route.query.p ? `?p=${context.$route.query.p}` : ''));
+            let is_admin = context.$route.name === 'admin-tags';
+            let has_page = context.$route.query.p;
+            console.log('hey', is_admin, has_page);
+            let params = '';
+            
+            if (has_page && is_admin) {
+                params = `?p=${context.$route.query.p}&is_admin=true`
+            }
+            else if (has_page) {
+                params = `?p=${context.$route.query.p}`
+            }
+            else if (is_admin) {
+                params = '?is_admin=true'
+            }
+            
+            const response = await context.$axios.get(`/tags/${params}`);
             commit('setTags', response.data);
         } catch (e) {
             console.log(e);

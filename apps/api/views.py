@@ -127,7 +127,16 @@ class PostViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.request.query_params.get('is_published'):
-            return Post.objects.filter(is_published=True)
+
+            if self.request.query_params.get('t'):
+                tag = Tag.objects.get(name=self.request.query_params.get('t'))
+
+                if tag:
+                    return Post.objects.filter(is_published=True, tags=tag)
+
+
+            else:
+                return Post.objects.filter(is_published=True)
         else:
             return Post.objects.all()
 
@@ -145,10 +154,15 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class TagViewSet(viewsets.ModelViewSet):
-    queryset = Tag.objects.all()
     serializer_class = TagSerializer
     pagination_class = TagsPaginator
     permission_classes = (AllowAny,)
+
+    def get_queryset(self):
+        if self.request.query_params.get('is_admin'):
+            return Tag.objects.all()
+        else:
+            return Tag.objects.exclude(posts__isnull=True)
 
     def retrieve(self, request, *args, **kwargs):
         try:
