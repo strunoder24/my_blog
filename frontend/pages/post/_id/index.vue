@@ -40,7 +40,7 @@
 
         computed: {
             ...mapState({
-                post: state => state.posts.post
+                post: state => state.posts.post,
             })
         },
 

@@ -4,11 +4,17 @@
             <div class="logo-container" @click="getPublished">
                 <router-link to="/" class="logo-text">Блог разработчика</router-link>
             </div>
-            <div class="md-layout-item">
+            <div class="md-layout-item wide-screen-buttons">
                 <md-button to="about">Обо мне</md-button>
                 <md-button to="services">Услуги</md-button>
                 <md-button to="projects">Портфолио</md-button>
                 <md-button to="contacts">Контакты</md-button>
+<!--                <md-button-->
+<!--                        class="md-icon-button"-->
+<!--                        :class="{'md-raised md-primary': searchPanelEnabled}"-->
+<!--                        @click="toggleSearchPanel"-->
+<!--                    ><md-icon>search</md-icon>-->
+<!--                </md-button>-->
             </div>
         </div>
         <div class="md-layout inner-layout" v-else>
@@ -46,7 +52,7 @@
 
 <script>
     import PopularTags from '~/components/partials/PopularTags.vue'
-
+    import { mapState } from 'vuex'
 
     export default {
         data: function () {
@@ -82,9 +88,23 @@
             }
         },
 
+        computed: {
+            ...mapState({
+                searchPanelEnabled: state => state.searchEnabled
+            })
+        },
+
         methods: {
             resize(width){
                 this.show_drawer = width < 1000
+            },
+
+            toggleSearchPanel(){
+                if (this.searchPanelEnabled) {
+                    this.$store.commit('toggleSearchPanel', false)
+                } else {
+                    this.$store.commit('toggleSearchPanel', true)
+                }
             },
 
             async getPublished(){
@@ -108,6 +128,12 @@
         min-height: 80px
         width: 100%
         z-index: 100
+
+
+
+    .wide-screen-buttons
+        display: flex
+        align-items: center
 
 
 

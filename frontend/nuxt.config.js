@@ -1,3 +1,5 @@
+let path = require('path');
+
 module.exports = {
     /*
       ** Headers of the page
@@ -34,6 +36,7 @@ module.exports = {
         '~/plugins/global-components',
         '~/plugins/vue-material',
         '~/plugins/axios',
+        '~/plugins/directives',
     ],
     
     axios: {
@@ -76,6 +79,9 @@ module.exports = {
                     exclude: /(node_modules)/
                 })
             }
+            config.resolve.alias['~c'] = path.resolve(__dirname, 'components');
+            config.resolve.alias['~s'] = path.resolve(__dirname, 'store');
+            config.resolve.alias['~h'] = path.resolve(__dirname, 'helpers');
         }
     },
     

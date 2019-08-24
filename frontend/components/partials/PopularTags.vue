@@ -4,7 +4,7 @@
                 class="tags-container"
                 :class="{'md-elevation-0': insideHeader}"
                 id="sidebar"
-            ><h1>Популярные теги</h1>
+            ><h1>Теги</h1>
             <div v-for="tag in tags.results" :key="tag.id">
                 <router-link class="tag-item" :to="{name: 'index', query: {t: tag.name}}">
                     {{ tag.name }}

@@ -1,3 +1,15 @@
+export const state = () => {
+    return {
+        searchEnabled: false
+    }
+};
+
+export const mutations = {
+    toggleSearchPanel(state, status) {
+        state.searchEnabled = status
+    }
+};
+
 export const actions = {
     async nuxtServerInit({ dispatch, commit }, context) {
         await dispatch('getPostsOnRender', context);
