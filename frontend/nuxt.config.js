@@ -40,7 +40,7 @@ module.exports = {
     ],
     
     axios: {
-        baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/v1/' : '/api/v1/',
+        baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/v1/' : 'http://localhost:8000/api/v1/',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -86,9 +86,9 @@ module.exports = {
     },
     
     env: {
-        baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/v1' : 'none',
-        uploadUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8000/uploads/' : 'none',
-        postListImageUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'none',
+        baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/v1' : 'http://localhost:8000/api/v1',
+        uploadUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8000/uploads/' : 'http://localhost:8000/uploads/',
+        postListImageUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'http://localhost:8000',
     },
 };
 

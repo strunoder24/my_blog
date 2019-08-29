@@ -24,9 +24,9 @@ export const actions = {
                                                              : '?is_published=true'));
             commit('posts/setPosts', response.data);
         } catch (e) {
-            if (e.response.status === 404 && context.query.p) {
-                const response = await context.app.$axios.get('/posts/?is_published=true');
-            }
+            // if (e.response.status === 404 && context.query.p) {
+            //     const response = await context.app.$axios.get('/posts/?is_published=true');
+            // }
         }
     },
     
