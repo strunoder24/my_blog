@@ -23,7 +23,7 @@ module.exports = {
     css: [
         { src: 'vue-material/dist/vue-material.min.css', lang: 'css' },
         { src: '~/assets/vue-material/theme.scss', lang: 'scss'}, // include vue-material theme engine
-        { src: '~/assets/styles/main.sass', lang: 'sass'}
+        { src: '~/assets/styles/main.sass', lang: 'sass'},
     ],
     
     // middleware запускаемый только на серваке
@@ -79,6 +79,8 @@ module.exports = {
                     exclude: /(node_modules)/
                 })
             }
+            config.resolve.alias['~'] = path.resolve(__dirname);
+            config.resolve.alias['~a'] = path.resolve(__dirname, 'assets');
             config.resolve.alias['~c'] = path.resolve(__dirname, 'components');
             config.resolve.alias['~s'] = path.resolve(__dirname, 'store');
             config.resolve.alias['~h'] = path.resolve(__dirname, 'helpers');

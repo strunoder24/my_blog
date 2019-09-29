@@ -5,7 +5,7 @@
   "author": "Виктор Кондик <strunoder24@mail.ru>",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "cross-env NODE_ENV=development HOST=0.0.0.0 PORT=3000 nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -16,6 +16,7 @@
     "@nuxtjs/axios": "^5.5.1",
     "@nuxtjs/markdownit": "^1.2.5",
     "cookie-universal-nuxt": "^2.0.14",
+    "cross-env": "^6.0.0",
     "lodash": "^4.17.14",
     "node-sass": "^4.11.0",
     "nuxt": "^2.7.1",
