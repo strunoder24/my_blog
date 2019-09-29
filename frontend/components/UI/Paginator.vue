@@ -82,6 +82,8 @@
                         this.$emit('changePage', to === 'next' ? this.p + 1 : this.p - 1)
                     }
                 }
+
+                document.scrollTop = 0;
             }
         }
     }

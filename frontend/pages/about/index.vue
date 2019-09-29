@@ -62,6 +62,7 @@
 
     .head {
         display: flex;
+        align-items: center;
     }
 
     .title {
@@ -92,6 +93,8 @@
     }
 
     .body {
+        margin-top: 10px;
+
         h2 {
             margin-bottom: 10px;
         }

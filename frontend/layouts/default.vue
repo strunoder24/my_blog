@@ -30,18 +30,20 @@
     }
 </script>
 
-<style lang="sass">
-    .default-layout-wrapper
-        display: flex
-        flex-direction: column
-        width: 100%
-        height: 100%
-        padding-top: 80px
+<style lang="scss">
+    .default-layout-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        padding-top: 80px;
+    }
 
 
-    .search-input-container
-        width: 100%
-        height: 100%
-        padding-top: 10px
+    .search-input-container {
+        width: 100%;
+        height: 100%;
+        padding-top: 10px;
+    }
 </style>
 
