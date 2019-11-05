@@ -5,14 +5,14 @@
                 <h1>Результаты по тегу: {{ $route.query.t }}</h1>
                 <Button @click="toAllPosts">Вернутся к списку постов</Button>
             </md-card>
-            <PostList :posts="posts.results"></PostList>
+            <PostList :posts="posts.results" @allPostsLoaded='allPostsLoaded = true'></PostList>
         </div>
         <div class="tags-wrapper">
             <PopularTags/>
         </div>
         <div class="paginator-container">
             <Paginator
-                        v-if="posts.pages_count > 1"
+                        v-if="posts.pages_count > 1 && allPostsLoaded"
                         :info="posts"
                         :api="'posts'"/>
         </div>
@@ -21,10 +21,14 @@
 
 <script>
     import { mapState } from 'vuex'
-    import PostList from '~/components/PostList.vue'
+    import PostList from '~/components/posts/PostList.vue'
     import PopularTags from '~/components/partials/PopularTags.vue'
 
     export default {
+        data: () => ({
+            allPostsLoaded: false
+        }),
+
         computed: {
             ...mapState({
                 posts: state => state.posts.posts,

@@ -43,7 +43,7 @@ export const mutations = {
 export const actions = {
     async getPublishedPost({commit}, context){
         try {
-            const url = '/posts/' + context.route.params.id + '/?is_published=true';
+            const url = '/api/posts/' + context.route.params.id + '/?is_published=true';
             const response = await context.$axios.get(url);
             commit('setPost', response.data);
         } catch (e) {
@@ -53,12 +53,12 @@ export const actions = {
     
     async getPosts({commit}, context) {
         try {
-            const url = '/posts/' + (context.$route.query.p ? `?p=${context.$route.query.p}` : '');
+            const url = '/api/posts/' + (context.$route.query.p ? `?p=${context.$route.query.p}` : '');
             const response = await context.$axios.get(url);
             commit('setPosts', response.data);
         } catch (e) {
             if (e.response && e.response.status === 404) {
-                const response = await context.$axios.get('/posts/');
+                const response = await context.$axios.get('/api/posts/');
                 commit('setPosts', response.data);
             }
         }
@@ -66,7 +66,7 @@ export const actions = {
     
     async getPostsOnTags({commit}, context) {
         try {
-            const url = '/posts/' + `?p=1&t=${context.$route.query.t}&is_published=true`;
+            const url = '/api/posts/' + `?p=1&t=${context.$route.query.t}&is_published=true`;
             const response = await context.$axios.get(url);
             commit('setPosts', response.data);
         } catch (e) {
@@ -76,14 +76,14 @@ export const actions = {
     
     async getPublishedPosts({commit}, context){
         try {
-            const url = '/posts/' + (context.$route.query.p ?
+            const url = '/api/posts/' + (context.$route.query.p ?
                                     `?p=${context.$route.query.p}&is_published=true`
                                     : '?is_published=true');
             const response = await context.$axios.get(url);
             commit('setPosts', response.data);
         } catch (e) {
             if (e.response && e.response.status === 404) {
-                const response = await context.$axios.get('/posts/');
+                const response = await context.$axios.get('/api/posts/');
                 commit('setPosts', response.data);
             }
         }
@@ -91,7 +91,7 @@ export const actions = {
     
     async deletePost({commit}, {context, id}) {
         try {
-            const url = '/posts/' + id + '/';
+            const url = '/api/posts/' + id + '/';
             const response = await context.$axios.delete(url);
             commit('deletePost', id)
         } catch (e) {
@@ -101,7 +101,7 @@ export const actions = {
     
     async publicPostStatus({commit}, {context, post}) {
          try {
-            const url = '/posts/' + post.id + '/';
+            const url = '/api/posts/' + post.id + '/';
             const response = await context.$axios.patch(url, {
                 is_published: !post.is_published
             });
@@ -124,7 +124,7 @@ export const actions = {
     
     async getImages({commit}, context) {
         try {
-            const url = '/images/';
+            const url = '/api/images/';
             const response = await context.$axios.get(url);
             commit('setImages', response.data);
         } catch (e) {

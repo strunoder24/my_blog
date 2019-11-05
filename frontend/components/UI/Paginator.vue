@@ -46,7 +46,7 @@
             execute_pagination(to){  //to: 'next', 'previous' or Number
                 if (this.api === 'posts') {
                     if (typeof to === 'number') {
-                        const url = '/posts/' + `?p=${to}`;
+                        const url = '/api/posts/' + `?p=${to}`;
                         this.$store.dispatch('posts/getPostsOnPaginator', {context: this, url, page_number: to})
                     } else {
                         this.$store.dispatch('posts/getPostsOnPaginator', {
@@ -57,7 +57,7 @@
                     }
                 } else if (this.api === 'tags') {
                     if (typeof to === 'number') {
-                        const url = `/tags/?p=${to}&is_admin=true`;
+                        const url = `/api/tags/?p=${to}&is_admin=true`;
                         this.$store.dispatch('tags/getTagsOnPaginator', {context: this, url, page_number: to})
                     } else {
                         this.$store.dispatch('tags/getTagsOnPaginator', {
@@ -70,7 +70,7 @@
 
                 else if (this.api === 'images') {
                     if (typeof to === 'number') {
-                        const url = '/images/' + `?p=${to}`;
+                        const url = '/api/images/' + `?p=${to}`;
                         this.$store.dispatch('posts/getImagesOnPaginator', {context: this, url, page_number: to});
                         this.$emit('changePage', to)
                     } else {

@@ -8,12 +8,6 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'm26isd#0vp^zj4k_qkuokw5^20n57=05r%ei6-q#jnizh#pu#b'
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-]
-CORS_ALLOW_CREDENTIALS = True
 
 # кастомная модель пользователя
 AUTH_USER_MODEL = 'accounts.User'
@@ -29,11 +23,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mptt',
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

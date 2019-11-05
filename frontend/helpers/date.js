@@ -63,8 +63,18 @@ const datetimeWithoutWords = (datetime) => {
 };
 
 
+const datetimeWithoutWordsAndTime = (datetime) => {
+    if (datetime) {
+        let raw = datetime.split('T');
+        let rawDate = raw[0];
+        let date = rawDate.split('-');
+        return date[2] + '.' + date[1] + '.' + date[0]
+    }
+};
+
 export {
     datetimeToHuman,
     dateToHuman,
     datetimeWithoutWords,
+    datetimeWithoutWordsAndTime
 }

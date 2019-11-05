@@ -26,6 +26,12 @@ module.exports = {
         { src: '~/assets/styles/main.sass', lang: 'sass'},
     ],
     
+    postcss: [
+        require('autoprefixer')({
+            browsers: ['> 5%']
+        })
+    ],
+    
     // middleware запускаемый только на серваке
     serverMiddleware: [
         '~/middleware/server.js'
@@ -40,17 +46,30 @@ module.exports = {
     ],
     
     axios: {
-        baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/v1/' : 'http://localhost:8000/api/v1/',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         credentials: true,
+        proxy: true
+    },
+    
+    proxy: {
+        '/api/': {
+            target: 'http://localhost:8000/api/v1/',
+            pathRewrite: { "^/api/": "" }
+        },
+    
+        '/images/': {
+            target: 'http://localhost:8000/',
+            pathRewrite: { "^/images/": "" }
+        },
     },
     
     //Подключаемые библиотеке в виде модуля, с доступом через $
     modules: [
         '@nuxtjs/axios',
+        '@nuxtjs/proxy',
         'cookie-universal-nuxt',
         '@nuxtjs/markdownit',
     ],
@@ -90,7 +109,6 @@ module.exports = {
     env: {
         baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/v1' : 'http://localhost:8000/api/v1',
         uploadUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8000/uploads/' : 'http://localhost:8000/uploads/',
-        postListImageUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'http://localhost:8000',
     },
 };
 

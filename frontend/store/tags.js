@@ -28,7 +28,6 @@ export const actions = {
         try {
             let is_admin = context.$route.name === 'admin-tags';
             let has_page = context.$route.query.p;
-            console.log('hey', is_admin, has_page);
             let params = '';
             
             if (has_page && is_admin) {
@@ -41,7 +40,7 @@ export const actions = {
                 params = '?is_admin=true'
             }
             
-            const response = await context.$axios.get(`/tags/${params}`);
+            const response = await context.$axios.get(`/api/tags/${params}`);
             commit('setTags', response.data);
         } catch (e) {
             console.log(e);
