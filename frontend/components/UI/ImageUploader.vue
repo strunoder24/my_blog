@@ -16,7 +16,7 @@
                         this.sendSignalToForm()
                     }" />
         </div>
-        <img class="loaded-image" :src="uploadedImage.src">
+        <img class="loaded-image" @click='deleteImage' :src="uploadedImage.src">
     </div>
 </template>
 
@@ -88,16 +88,23 @@
 
                 const data = new FormData();
                 data.append('file', this.imagesOnload.file);
-                this.$axios.post(`/upload/`, data, forPost)
+                this.$axios.post(`/api/images/`, data, forPost)
                     .then(({ data }) => {
-                        this.uploadedImage.id = data.id;
-                        this.uploadedImage.src = process.env.uploadUrl + data.file;
+                        this.uploadedImage.id = data.public_id;
+                        this.uploadedImage.src = data.original_url;
                         this.sendSignalToForm();
                         this.clear_after_load();
                     })
                     .catch((error) => {
                         console.log(error);
                     })
+            },
+
+            deleteImage(){
+                this.uploadedImage = {
+                    id: '',
+                    src: ''
+                }
             },
 
             sendSignalToForm(){
@@ -128,4 +135,5 @@
 
     .loaded-image
         width: 600px
+        cursor: pointer
 </style>

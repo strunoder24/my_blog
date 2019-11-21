@@ -2,14 +2,14 @@
     <div class="overlay" @click.self="$emit('close')">
         <md-card class="container">
             <div class="img-layer">
-                <div class="item" v-for="img in images.results" :key="img.id">
+                <div class="item" v-for="img in images.docs" :key="img._id">
                     <div
-                            @mouseenter="hover_id = img.id"
+                            @mouseenter="hover_id = img._id"
                             @mouseleave="hover_id = 0"
                             style="position: relative;"
-                        ><img :src="img.file">
+                        ><img :src="img.original_url">
                         <div
-                                v-if="hover_id === img.id"
+                                v-if="hover_id === img._id"
                                 class="image-hover"
                                 @click="pickImage(img)"
                             >Выбрать эту картинку?
@@ -18,7 +18,7 @@
                 </div>
             </div>
             <Paginator
-                v-if="images.pages_count > 1"
+                v-if="images.pagingCounter > 1"
                 :info="images"
                 style="margin-bottom: 0"
                 api="images"
@@ -54,8 +54,8 @@
         methods: {
             pickImage(img) {
                 this.$emit('imagePicked', {
-                    id: img.id,
-                    src: img.file
+                    id: img.public_id,
+                    src: img.original_url
                 });
                 this.$emit('close');
             },

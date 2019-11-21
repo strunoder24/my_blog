@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const posts = require('./posts');
 const tags = require('./tags');
+const images = require('./images');
 
 router.get('/', (req, res) => {
     res.json({
@@ -12,5 +13,6 @@ router.get('/', (req, res) => {
 
 router.use(posts);
 router.use(tags);
+router.use(images);
 
 module.exports = router;

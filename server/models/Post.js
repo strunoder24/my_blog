@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const mongoosePaginate = require('mongoose-paginate-v2');
+const ImageSchema = require('./Image').Schema;
 
 const PostSchema = new Schema({
     title: {
@@ -11,7 +12,7 @@ const PostSchema = new Schema({
     preview_text: String,
     lang: String,
     likes: Number,
-    // main_image: ImageSchema,
+    main_image: ImageSchema,
     tags: [ {type: Schema.ObjectId, ref: 'tag'} ],
     is_published: Boolean,
     create_date: Date,
