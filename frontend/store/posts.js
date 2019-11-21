@@ -58,8 +58,12 @@ export const actions = {
             commit('setPosts', response.data);
         } catch (e) {
             if (e.response && e.response.status === 404) {
-                const response = await context.$axios.get('/api/posts/');
-                commit('setPosts', response.data);
+                try {
+                    const response = await context.$axios.get('/api/posts/');
+                    commit('setPosts', response.data);
+                } catch(err) {
+                    // posts route doesn't exist
+                }
             }
         }
     },

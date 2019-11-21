@@ -7,7 +7,7 @@
 
                 <md-card-content>
                     <div class="md-layout-item">
-                        <InputComponent v-model="username" @submit="submit">
+                        <InputComponent v-model="email" @submit="submit">
                             Email:
                         </InputComponent>
                     </div>
@@ -30,19 +30,20 @@
     export default {
         data(){
             return {
-                username: '',
+                email: '',
                 password: ''
             }
         },
 
         methods: {
             submit(){
-                this.$axios.post('/signin/', {
-                    username: this.username,
+                this.$axios.post('/auth/signin/', {
+                    email: this.email,
                     password: this.password
                 })
                     .then(r => {
-                        this.$store.commit('accounts/setInfo', r.data)
+                        this.$bus.$emit('setUserCredentials', { user: r.data.user, token: r.data.token});
+                        this.$store.commit('accounts/setInfo', r.data.user)
                     })
                     .catch(e => {
                         console.log(e);

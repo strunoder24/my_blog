@@ -2,12 +2,7 @@
     <div v-if="renderGranted" class="admin-wrapper main-container md-layout">
         <section class="section-wrapper">
             <ButtonsPanel/>
-            <TagsList :tags="tags.results" />
-            <Paginator
-                        v-if="tags.pages_count > 1"
-                        :info="tags"
-                        :api="'tags'"
-            />
+            <TagsList :tags="tags" />
             <CreateTag
                         :active="showCreateTag"
             />

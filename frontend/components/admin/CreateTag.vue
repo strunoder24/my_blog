@@ -38,12 +38,12 @@
 
         methods: {
             createTag(){
-                this.$axios.$post('/tags/', {
+                this.$axios.$post('/api/tags/', {
                     name: this.value
                 })
                     .then(r => {
                         this.value = '';
-                        this.$store.dispatch('tags/getTags', {context: this});
+                        this.$store.dispatch('tags/getTags', this);
                     })
                     .catch(e => {
                         console.log(e.response);

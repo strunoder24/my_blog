@@ -78,7 +78,7 @@
         methods: {
             async save() {
                 try {
-                    const response = await this.$axios.post(`${process.env.baseUrl}/posts/`, {
+                    const response = await this.$axios.post(`/api/posts/`, {
                         title: this.title,
                         is_published: this.is_published,
                         lang: this.language,

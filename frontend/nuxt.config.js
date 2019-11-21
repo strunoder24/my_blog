@@ -43,6 +43,7 @@ module.exports = {
         '~/plugins/vue-material',
         '~/plugins/axios',
         '~/plugins/directives',
+        '~/plugins/bus',
     ],
     
     axios: {
@@ -64,6 +65,11 @@ module.exports = {
             target: 'http://localhost:8000/',
             pathRewrite: { "^/images/": "" }
         },
+        
+        '/auth/': {
+            target: 'http://localhost:8000/',
+            pathRewrite: { "^/auth/": "" }
+        }
     },
     
     //Подключаемые библиотеке в виде модуля, с доступом через $

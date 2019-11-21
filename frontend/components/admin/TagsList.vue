@@ -4,20 +4,20 @@
                 class="tag md-layout-item"
                 v-for="tag in tags"
                 @click.native="edit_tag(tag)"
-                :key="tag.id"
+                :key="tag._id"
                 md-with-hover
         >
             <div class="tag-name ellipsis"
                  :title="tag.name"
-                 v-if="editable_id !== tag.id">
+                 v-if="editable_id !== tag._id">
                 {{ tag.name }}
             </div>
             <input  class="tag-name tag-input"
-                    v-if="editable_id === tag.id"
+                    v-if="editable_id === tag._id"
                     @blur="save_changes()"
                     @keyup.enter="blur()"
                     v-model="temp_value"
-                    :ref="tag.id"
+                    :ref="tag._id"
                     type="text">
         </md-card>
     </div>
@@ -48,10 +48,10 @@
         methods: {
             edit_tag(tag) {
                 if (this.editable_id === 0) {
-                    this.editable_id = tag.id;
+                    this.editable_id = tag._id;
                     this.temp_value = tag.name;
                     this.$nextTick(() => {
-                        const element = this.$refs[tag.id][0];
+                        const element = this.$refs[tag._id][0];
                         element.focus();
                     });
                 }
@@ -69,10 +69,13 @@
                 })
             },
 
-            save_changes() {
+            async save_changes() {
                 if (!this.prevent_save) {
-                    // this.$axios.patch();
-                    this.$store.commit('tags/changeTagValue', {id: this.editable_id, value: this.temp_value});
+                    if (this.temp_value === '') {
+                        await this.$store.dispatch('tags/deleteTag', {context: this, tag: {_id: this.editable_id, name: this.temp_value}});
+                    } else {
+                        await this.$store.dispatch('tags/changeTag', {context: this, tag: {_id: this.editable_id, name: this.temp_value}});
+                    }
                     this.close_input()
                 }
             }

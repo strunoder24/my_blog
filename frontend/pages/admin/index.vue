@@ -1,12 +1,14 @@
 <template>
-    <div v-if="renderGranted" class="admin-wrapper main-container md-layout" style="flex: 1">
-        <login v-if="Object.keys(users).length === 0"></login>
+    <div v-if="renderGranted"
+         class="admin-wrapper main-container md-layout"
+         style="flex: 1">
+        <login v-if="Object.keys(user).length === 0"></login>
         <section class="admin-wrapper" v-else>
             <ButtonsPanel />
             <PostsList :posts="posts.results" />
             <div class="pagination-container">
                 <Paginator
-                        v-if="posts.pages_count > 1"
+                        v-if="posts && posts.pages_count > 1"
                         :info="posts"
                         :api="'posts'"/>
             </div>
@@ -29,22 +31,22 @@
         },
 
         created(){
-            this.renderMethod()
+            this.renderMethod();
         },
 
         computed: {
             ...mapState({
-                users: state => state.accounts['user-info'],
+                user: state => state.accounts['user-info'],
                 posts: state => state.posts.posts
             })
         },
 
         methods: {
             async renderMethod(){
-                await this.$store.dispatch('accounts/getUserInfo', this)
-                await this.$store.dispatch('posts/getPosts', this)
+                await this.$store.dispatch('accounts/getUserInfo', this);
+                await this.$store.dispatch('posts/getPosts', this);
                 this.renderGranted = true
-            }
+            },
         },
 
         components: {
@@ -59,6 +61,9 @@
     .admin-wrapper
         display: flex
         flex-direction: column
+        width: 100%
+        max-width: 1200px
+        margin: 0 auto
 
 
     .pagination-container

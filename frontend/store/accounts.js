@@ -11,7 +11,13 @@ export const mutations = {
 export const actions = {
     async getUserInfo({ commit }, context) {
         try {
-            const response = await context.$axios.get('/user-info/');
+            let token = localStorage.getItem('token');
+            
+            const response = await context.$axios.get('/auth/user-info/', {
+                headers: {
+                    "jwt": token
+                }
+            });
             commit('setInfo', response.data);
         } catch (e) {
             console.log(e);
