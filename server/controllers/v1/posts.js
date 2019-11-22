@@ -15,17 +15,27 @@ const createPost = (req, res) => {
         preview_text: req.body.preview_text,
         lang: req.body.lang,
         likes: 0,
+        main_image: req.body.main_image,
         tags: req.body.tags,
         is_published: req.body.is_published,
         create_date: req.body.create_date,
         edit_date: req.body.edit_date,
     }, (err, post) => {
         if (err) return res.status(400).json(err);
-        
+
         res.json(post)
     })
 };
 
+const getPosts = (req, res) => {
+    Post.paginate({}, {
+        limit: 10,
+        populate: ['main_image', 'tags']
+    })
+        .then(posts => res.json(posts))
+};
+
 module.exports = {
     createPost,
+    getPosts
 };

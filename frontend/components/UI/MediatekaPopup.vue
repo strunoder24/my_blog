@@ -54,7 +54,7 @@
         methods: {
             pickImage(img) {
                 this.$emit('imagePicked', {
-                    id: img.public_id,
+                    id: img._id,
                     src: img.original_url
                 });
                 this.$emit('close');

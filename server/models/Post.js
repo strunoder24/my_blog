@@ -12,7 +12,7 @@ const PostSchema = new Schema({
     preview_text: String,
     lang: String,
     likes: Number,
-    main_image: ImageSchema,
+    main_image: {type: Schema.ObjectId, ref: 'image'},
     tags: [ {type: Schema.ObjectId, ref: 'tag'} ],
     is_published: Boolean,
     create_date: Date,

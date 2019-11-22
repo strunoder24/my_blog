@@ -22,8 +22,8 @@
                             <md-select  v-model="tags" id="tags" multiple>
                                 <md-option
                                         v-for="tag in available_tags"
-                                        :key="tag.id"
-                                        :value="tag.id"
+                                        :key="tag._id"
+                                        :value="tag._id"
                                     >{{ tag.name }}
                                 </md-option>
                             </md-select>
@@ -71,7 +71,7 @@
         computed: {
             ...mapState({
                 users: state => state.accounts['user-info'],
-                available_tags: state => state.tags.tags.results
+                available_tags: state => state.tags.tags
             })
         },
 
