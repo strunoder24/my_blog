@@ -4,29 +4,29 @@
                 md-with-hover
                 class="post-container"
                 v-for="post in posts"
-                :key="post.id">
+                :key="post._id">
             <router-link class="post-title ellipsis"
-                         :to="{name: 'admin-edit-id', params: {id: post.id}}"
+                         :to="{name: 'admin-edit-id', params: {id: post._id}}"
                          :title="post.title"
                 >{{ post.title }}
             </router-link>
-            <img class="post-content" :src="get_image(post)">
+            <img class="post-content" :src="post.main_image.original_url">
             <div class="preview-on-post">
                 {{ post.preview_text }}
             </div>
             <div class="post-controls">
                 <Button
                         type="accent"
-                        v-if="deleted_post !== post.id"
-                        @click="deleted_post = post.id">
+                        v-if="deleted_post !== post._id"
+                        @click="deleted_post = post._id">
                     Удалить
                 </Button>
                 <div
                         class="delete_dialogue"
                         v-on-clickaway="drop_delete_id"
-                        v-if="deleted_post === post.id">
+                        v-if="deleted_post === post._id">
                     Вы уверены?
-                    <md-button class="md-icon-button md-raised md-accent" @click="execute_delete(post.id)">
+                    <md-button class="md-icon-button md-raised md-accent" @click="execute_delete(post._id)">
                         <md-icon>check</md-icon>
                     </md-button>
                     <md-button class="md-icon-button md-raised" @click="deleted_post = 0">
@@ -48,8 +48,9 @@
                             <md-tooltip>{{ post.is_published ? 'Убрать из публикации' : 'Опубликовать' }}</md-tooltip>
                         </md-button>
 
-                        <md-button class="md-icon-button" @click="$router.push({name: 'admin-edit-id', params: {id: post.id}})">
-                            <md-icon>edit</md-icon>
+                        <md-button class="md-icon-button"
+                                   @click="$router.push({name: 'admin-edit-id', params: {id: post._id}})"
+                            ><md-icon>edit</md-icon>
                             <md-tooltip>Редактировать</md-tooltip>
                         </md-button>
                     </md-speed-dial-content>
@@ -86,13 +87,6 @@
         },
 
         methods: {
-            get_image(post){
-                if (post.main_image && post.main_image.file) {
-                    return process.env.postListImageUrl + post.main_image.file
-                }
-                return ''
-            },
-
             async execute_delete(id){
                 await this.$store.dispatch('posts/deletePost', {context: this, id});
                 this.drop_delete_id()

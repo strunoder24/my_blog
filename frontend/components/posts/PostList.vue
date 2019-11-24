@@ -1,7 +1,7 @@
 <template>
     <div class="post-lists-container">
         <PostItem v-for="post in croppedPosts"
-                  :key="post.id"
+                  :key="post._id"
                   :post='post'
                   @loadNextPost='getNext'
         />

@@ -37,6 +37,7 @@ const changeTag = (req, res) => {
 const deleteTag = (req, res) => {
     Tag.findByIdAndDelete(req.params._id, (err) => {
         if (err) return res.status(400).json(err);
+        
         res.json({
             status: 'OK',
             msg: 'Deleted successfully'

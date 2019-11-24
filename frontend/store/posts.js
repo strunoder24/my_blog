@@ -17,18 +17,18 @@ export const mutations = {
     },
     
     deletePost(state, id) {
-        let posts = state.posts.results;
+        let posts = state.posts.docs;
         posts.forEach((post, i) => {
-            if (post.id === id) {
+            if (post._id === id) {
                 vue.delete(posts, i)
             }
         })
     },
     
     changePublicationStatus(state, post) {
-        let posts = state.posts.results;
+        let posts = state.posts.docs;
         posts.forEach((item, i) => {
-            if (post.id === item.id) {
+            if (post._id === item._id) {
                 vue.set(posts[i], 'is_published', !post.is_published);
             }
         })
@@ -105,7 +105,7 @@ export const actions = {
     
     async publicPostStatus({commit}, {context, post}) {
          try {
-            const url = '/api/posts/' + post.id + '/';
+            const url = '/api/posts/' + post._id + '/';
             const response = await context.$axios.patch(url, {
                 is_published: !post.is_published
             });
@@ -136,7 +136,7 @@ export const actions = {
         }
     },
     
-    async getImagesOnPaginator({commit}, { context, url, page_number }) {
+    async getImagesOnPaginator({commit}, { context, url }) {
         try {
             const response = await context.$axios.get(url);
             commit('setImages', response.data);

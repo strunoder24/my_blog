@@ -22,8 +22,8 @@
                             <md-select  v-model="tags" id="tags" multiple>
                                 <md-option
                                         v-for="tag in available_tags"
-                                        :key="tag.id"
-                                        :value="tag.id"
+                                        :key="tag._id"
+                                        :value="tag._id"
                                     >{{ tag.name }}
                                 </md-option>
                             </md-select>
@@ -75,22 +75,22 @@
         computed: {
             ...mapState({
                 users: state => state.accounts['user-info'],
-                available_tags: state => state.tags.tags.results
+                available_tags: state => state.tags.tags
             })
         },
 
         methods: {
             async init(){
                 try {
-                    const { data } = await this.$axios.get(`/posts/${this.$route.params.id}`);
+                    const { data } = await this.$axios.get(`/api/posts/${this.$route.params.id}`);
                     this.title = data.title;
                     this.is_published = data.is_published;
                     this.language = data.lang;
                     this.markdown = data.markdown;
-                    this.image = data.main_image.id;
+                    this.image = data.main_image;
                     this.preview_text = data.preview_text;
                     this.tags = data.tags.map((obj) => {
-                            return obj.id
+                            return obj._id
                         })
                 } catch (e) {
                     console.log(e);
@@ -100,7 +100,7 @@
 
             async save() {
                 try {
-                    const response = await this.$axios.patch(`/posts/${this.$route.params.id}/`, {
+                    const response = await this.$axios.patch(`/api/posts/${this.$route.params.id}/`, {
                         title: this.title,
                         is_published: this.is_published,
                         lang: this.language,

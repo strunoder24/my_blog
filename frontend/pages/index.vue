@@ -5,14 +5,14 @@
                 <h1>Результаты по тегу: {{ $route.query.t }}</h1>
                 <Button @click="toAllPosts">Вернутся к списку постов</Button>
             </md-card>
-            <PostList :posts="posts.results" @allPostsLoaded='allPostsLoaded = true'></PostList>
+            <PostList :posts="posts.docs" @allPostsLoaded='allPostsLoaded = true'></PostList>
         </div>
         <div class="tags-wrapper">
             <PopularTags/>
         </div>
         <div class="paginator-container">
             <Paginator
-                        v-if="posts.pages_count > 1 && allPostsLoaded"
+                        v-if="posts.pagingCounter > 1 && allPostsLoaded"
                         :info="posts"
                         :api="'posts'"/>
         </div>

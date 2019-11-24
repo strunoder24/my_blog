@@ -5,7 +5,7 @@
                 :class="{'md-elevation-0': insideHeader}"
                 id="sidebar"
             ><h1>Теги</h1>
-            <div v-for="tag in tags.results" :key="tag.id">
+            <div v-for="tag in tags" :key="tag._id">
                 <router-link class="tag-item" :to="{name: 'index', query: {t: tag.name}}">
                     {{ tag.name }}
                 </router-link>

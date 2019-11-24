@@ -3,9 +3,9 @@
          class="admin-wrapper main-container md-layout"
          style="flex: 1">
         <login v-if="Object.keys(user).length === 0"></login>
-        <section class="admin-wrapper" v-else>
+        <section class="admin-container" v-else>
             <ButtonsPanel />
-            <PostsList :posts="posts.results" />
+            <PostsList :posts="posts.docs" />
             <div class="pagination-container">
                 <Paginator
                         v-if="posts && posts.pages_count > 1"
@@ -64,6 +64,17 @@
         width: 100%
         max-width: 1200px
         margin: 0 auto
+
+    .admin-container
+        display: flex
+        flex-direction: column
+        width: 100%
+        max-width: 1200px
+        margin: 0 auto
+
+        @media (max-width: 1320px)
+            width: auto
+            margin: 0 62px
 
 
     .pagination-container

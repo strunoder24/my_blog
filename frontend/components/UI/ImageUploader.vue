@@ -55,9 +55,8 @@
 
         methods: {
             async getExistingImage(){
-                let { data } = await this.$axios.get('/images/' + this.image + '/');
-                this.uploadedImage.id = data.id;
-                this.uploadedImage.src = data.file;
+                this.uploadedImage.id = this.image._id;
+                this.uploadedImage.src = this.image.original_url;
             },
 
             uploadButton(){

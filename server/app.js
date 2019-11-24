@@ -9,7 +9,8 @@ const helmet = require('helmet');
 app.use(helmet());
 
 mongoose.connect(connectionString, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useFindAndModify: false
 });
 
 app.use(express.static('public'));

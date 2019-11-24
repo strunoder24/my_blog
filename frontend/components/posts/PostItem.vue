@@ -3,7 +3,7 @@
       ref='post'
       class="post">
     <div class="post-header">
-      <router-link class='ellipsis-2-lines' :to="{name: 'post-id', params: {id: post.id}}">
+      <router-link class='ellipsis-2-lines' :to="{name: 'post-id', params: {id: post._id}}">
         {{ post.title }}
       </router-link>
       <div class="post-created-date">
@@ -18,18 +18,18 @@
       <router-link
           :to="{name: 'index', query: {t: tag.name}}"
           v-for="tag in post.tags"
-          :key="tag.id"
+          :key="tag._id"
       >{{ tag.name }}
       </router-link>
     </div>
     <img
         class="main-image"
-        :src="get_image(post)"
+        :src="post.main_image.original_url"
         alt="Заглавная картинка поста">
     <div class="preview-text">{{post.preview_text}}</div>
     <div class="controls">
       <router-link
-          :to="{name: 'post-id', params: {id: post.id}}"
+          :to="{name: 'post-id', params: {id: post._id}}"
           class="read-next"
       >Читать далее
       </router-link>
@@ -56,10 +56,6 @@
 
             date_parser_numbers(date) {
                 return datetimeWithoutWordsAndTime(date)
-            },
-
-            get_image(post) {
-                return '/images' + post.main_image.file
             }
         },
 

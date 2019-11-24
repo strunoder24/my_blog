@@ -5,8 +5,7 @@ const config = require('../config');
 
 const { validationResult } = require('express-validator');
 
-
-let signup = (req, res) => {
+const signup = (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
     
@@ -35,7 +34,7 @@ let signup = (req, res) => {
     });
 };
 
-let signin = (req, res) => {
+const signin = (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
     
@@ -59,7 +58,7 @@ let signin = (req, res) => {
     });
 };
 
-let userInfo = (req, res) => {
+const userInfo = (req, res) => {
     let token = req.headers.jwt;
     jwt.verify(token, config.secret, (err, tokenInfo) => {
         if (err) return res.status(400).json(err);
@@ -71,8 +70,27 @@ let userInfo = (req, res) => {
     });
 };
 
+isLoggedUser = (req, res, next) => {
+    let token = req.headers.token;
+    
+    if (!token) res.status(401).json({
+        status: "DENIED",
+        msg: "Token not send. You are not an admin GTFO"
+    });
+    
+    jwt.verify(token, config.secret, (err) => {
+        if (err) return res.status(401).json({
+            status: "DENIED",
+            msg: "Wrong token. Who are you? GTFO"
+        });
+    });
+    
+    next()
+};
+
 module.exports = {
     signup,
     signin,
-    userInfo
+    userInfo,
+    isLoggedUser
 };

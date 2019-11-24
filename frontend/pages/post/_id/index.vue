@@ -14,12 +14,12 @@
                     <a
                             href="#"
                             v-for="tag in post.tags"
-                            :key="tag.id"
+                            :key="tag._id"
                     >{{ tag.name }}
                     </a>
                 </div>
             </div>
-            <img class="main-image" :src="get_main_image(post)" alt="Главное изображение поста">
+            <img class="main-image" :src="post.main_image.original_url" alt="Главное изображение поста">
             <div class="post-text markdown-parsed" v-html="$md.render(post.markdown)"></div>
         </md-card>
         <div class="tags-wrapper">
@@ -45,10 +45,6 @@
         },
 
         methods: {
-            get_main_image(post){
-                return process.env.postListImageUrl + post.main_image.file
-            },
-
             date_parser(date) {
                 return dateToHuman(date)
             },
@@ -70,6 +66,10 @@
 
         @media (max-width: 999px)
             grid-template-areas: "c c c c" "c c c c"
+
+
+        @media (min-width: 1316px)
+            width: 100%
 
 
     .content

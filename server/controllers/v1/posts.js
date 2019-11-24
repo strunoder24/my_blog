@@ -20,10 +20,10 @@ const createPost = (req, res) => {
         is_published: req.body.is_published,
         create_date: req.body.create_date,
         edit_date: req.body.edit_date,
-    }, (err, post) => {
+    }, (err, posts) => {
         if (err) return res.status(400).json(err);
 
-        res.json(post)
+        res.json(posts)
     })
 };
 
@@ -35,7 +35,48 @@ const getPosts = (req, res) => {
         .then(posts => res.json(posts))
 };
 
+const getSinglePost = (req, res) => {
+    const id = req.params.id;
+    
+    Post.findById(id)
+        .populate(['main_image', 'tags'])
+        .then(post => {
+            res.json(post)
+        })
+        .catch(err => {
+            res.status(400).json(err);
+        })
+};
+
+const updatePost = (req, res) => {
+    const id = req.params.id;
+    
+    Post.findByIdAndUpdate(id, {
+        ...req.body
+    }, (err, post) => {
+        if (err) return res.status(400).json(err);
+    
+        res.json(post)
+    })
+};
+
+const deletePost = (req, res) => {
+    const id = req.params.id;
+    
+    Post.findByIdAndDelete(id, (err) => {
+        if (err) return res.status(400).json(err);
+    
+        res.json({
+            status: 'OK',
+            msg: 'Deleted successfully'
+        })
+    })
+};
+
 module.exports = {
     createPost,
-    getPosts
+    getPosts,
+    getSinglePost,
+    updatePost,
+    deletePost
 };
