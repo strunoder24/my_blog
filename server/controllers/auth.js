@@ -82,8 +82,6 @@ const logout = async (req, res) => {
 };
 
 isLoggedUser = async (req, res, next) => {
-    await cleanBlacklist();
-    
     let token = req.headers.token;
     
     if (!token) res.status(401).json({
@@ -91,15 +89,14 @@ isLoggedUser = async (req, res, next) => {
         msg: "Token not send. You are not an admin GTFO"
     });
     
-    jwt.verify(token, config.secret, (err) => {
+    jwt.verify(token, config.secret, async (err) => {
         if (err) return res.status(401).json(err);
-    });
     
-    const isAtBlacklist = await checkForBlacklist(token);
-    if (isAtBlacklist) return res.status(401).json(isAtBlacklist);
-    
-    next()
-};
+        const isAtBlacklist = await checkForBlacklist(token);
+        if (isAtBlacklist) return res.status(401).json(isAtBlacklist);
+        
+        next()
+    });};
 
 module.exports = {
     signup,

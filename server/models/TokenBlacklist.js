@@ -13,13 +13,15 @@ const TokenBL = mongoose.model('token_black_list', TokenBLSchema);
 const checkForBlacklist = async (token) => {
     let status = {};
     
-    await TokenBL.find({token}, (err) => {
+    await TokenBL.find({token}, (err, tok) => {
+        console.log(tok);
+        
         if (err) {
             status = {
                 status: 'ERROR',
                 msg: err
             }
-        } else {
+        } else if (tok.length) {
             status = {
                 status: 'DENIED',
                 msg: 'Current token is blacklisted'
