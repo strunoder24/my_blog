@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User').User;
+const { addToBlacklist, checkForBlacklist, cleanBlacklist } = require('../models/TokenBlacklist');
 const config = require('../config');
 
 const { validationResult } = require('express-validator');
@@ -25,8 +26,8 @@ const signup = (req, res) => {
             }, (err, user) => {
                 if (err) return res.status(400).json({msg: 'get out'});
                 
-                let token = jwt.sign({id: user._id}, config.secret, {expiresIn: 86400});
-                res.json({auth: true, token, user: {email, isAdmin: true}})
+                // let token = jwt.tokenSign(user);
+                // res.json({auth: true, token, user: {email, isAdmin: true}})
             });
         } else {
             return res.status(401).json({msg: 'Admin is already exist. GTFO'})
@@ -59,7 +60,7 @@ const signin = (req, res) => {
 };
 
 const userInfo = (req, res) => {
-    let token = req.headers.jwt;
+    let token = req.headers.token;
     jwt.verify(token, config.secret, (err, tokenInfo) => {
         if (err) return res.status(400).json(err);
         
@@ -70,7 +71,19 @@ const userInfo = (req, res) => {
     });
 };
 
-isLoggedUser = (req, res, next) => {
+const logout = async (req, res) => {
+    let token = req.headers.token;
+    await addToBlacklist(token);
+    
+    res.json({
+        status: 'OK',
+        msg: 'Successfully logout'
+    })
+};
+
+isLoggedUser = async (req, res, next) => {
+    await cleanBlacklist();
+    
     let token = req.headers.token;
     
     if (!token) res.status(401).json({
@@ -79,11 +92,11 @@ isLoggedUser = (req, res, next) => {
     });
     
     jwt.verify(token, config.secret, (err) => {
-        if (err) return res.status(401).json({
-            status: "DENIED",
-            msg: "Wrong token. Who are you? GTFO"
-        });
+        if (err) return res.status(401).json(err);
     });
+    
+    const isAtBlacklist = await checkForBlacklist(token);
+    if (isAtBlacklist) return res.status(401).json(isAtBlacklist);
     
     next()
 };
@@ -91,6 +104,7 @@ isLoggedUser = (req, res, next) => {
 module.exports = {
     signup,
     signin,
+    logout,
     userInfo,
     isLoggedUser
 };

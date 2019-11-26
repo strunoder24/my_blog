@@ -15,7 +15,7 @@ export const actions = {
             
             const response = await context.$axios.get('/auth/user-info/', {
                 headers: {
-                    "jwt": token
+                    "token": token
                 }
             });
             commit('setInfo', response.data);

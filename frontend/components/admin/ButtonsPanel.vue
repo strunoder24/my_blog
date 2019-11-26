@@ -73,11 +73,14 @@
 
         methods: {
             execute_logout(){
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
+                this.$axios.post('/auth/logout')
+                    .then(() => {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('user');
 
-                this.$store.commit('accounts/setInfo', {});
-                this.$router.push('/')
+                        this.$store.commit('accounts/setInfo', {});
+                        this.$router.push('/')
+                    });
             },
         }
     }
