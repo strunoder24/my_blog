@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { validationResult } = require('express-validator');
 const Post = require('../../models/Post').Post;
+const { findTagId } = require('../../models/Tag');
 
 const createPost = (req, res) => {
     const errors = validationResult(req);
@@ -27,10 +28,22 @@ const createPost = (req, res) => {
     })
 };
 
-const getPosts = (req, res) => {
-    Post.paginate({}, {
-        limit: 10,
-        populate: ['main_image', 'tags']
+const getPosts = async (req, res) => {
+    let mongoQuery = {};
+    
+    let is_published = req.query.is_published;
+    let page = req.query.p;
+    let tag = req.query.t;
+    
+    console.log(tag);
+    
+    if (is_published) mongoQuery.is_published = is_published;
+    if (tag && tag.length !== 0) mongoQuery.tags = await findTagId(tag);
+    
+    Post.paginate(mongoQuery, {
+        limit: 2,
+        populate: ['main_image', 'tags'],
+        page: page ? page : 1
     })
         .then(posts => res.json(posts))
 };

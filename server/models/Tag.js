@@ -11,7 +11,18 @@ const TagSchema = new Schema({
 
 const Tag = mongoose.model('tag', TagSchema);
 
+const findTagId = (name) => {
+    return Tag.findOne({name})
+        .then(tag => {
+            return tag["_id"];
+        })
+        .catch(e => {
+            console.log(e);
+        })
+};
+
 module.exports = {
     Schema: TagSchema,
-    Tag
+    Tag,
+    findTagId
 };

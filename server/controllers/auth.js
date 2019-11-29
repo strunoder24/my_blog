@@ -25,9 +25,9 @@ const signup = (req, res) => {
                 isAdmin: true
             }, (err, user) => {
                 if (err) return res.status(400).json({msg: 'get out'});
-                
-                // let token = jwt.tokenSign(user);
-                // res.json({auth: true, token, user: {email, isAdmin: true}})
+    
+                let token = jwt.sign({id: user._id}, config.secret, {expiresIn: 86400});
+                res.json({auth: true, token, user: {email, isAdmin: user.isAdmin}})
             });
         } else {
             return res.status(401).json({msg: 'Admin is already exist. GTFO'})

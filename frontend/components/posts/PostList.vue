@@ -25,12 +25,22 @@
         }),
 
         created(){
-            if (this.posts.length) {
-                this.croppedPosts = [ this.posts[0] ]
+            this.setFirstCropped();
+        },
+
+        watch: {
+            posts: function () {
+                this.setFirstCropped()
             }
         },
 
         methods: {
+            setFirstCropped(){
+                if (this.posts.length) {
+                    this.croppedPosts = [ this.posts[0] ]
+                }
+            },
+
             getNext(){
                 const croppedLength = this.croppedPosts.length;
                 const postsLength = this.posts.length;

@@ -70,7 +70,7 @@ export const actions = {
     
     async getPostsOnTags({commit}, context) {
         try {
-            const url = '/api/posts/' + `?p=1&t=${context.$route.query.t}&is_published=true`;
+            const url = '/api/posts/' + `?p=${context.$route.query.p ? context.$route.query.p : 1}&t=${context.$route.query.t}&is_published=true`;
             const response = await context.$axios.get(url);
             commit('setPosts', response.data);
         } catch (e) {
@@ -115,11 +115,10 @@ export const actions = {
         }
     },
     
-    async getPostsOnPaginator({commit}, { context, url, page_number }) {
+    async getPostsOnPaginator({commit}, { context, url, page_number, tag }) {
         try {
-            const response = await context.$axios.get(url);
-            commit('setPosts', response.data);
-            context.$router.replace({query: {p: page_number}})
+            if (tag) context.$router.replace({query: {p: page_number, t: tag}});
+            else context.$router.replace({query: {p: page_number}});
         } catch (e) {
             console.log(e);
         }

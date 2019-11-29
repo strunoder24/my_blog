@@ -12,7 +12,7 @@
         </div>
         <div class="paginator-container">
             <Paginator
-                        v-if="posts.pagingCounter > 1 && allPostsLoaded"
+                        v-if="posts.totalPages > 1 && allPostsLoaded"
                         :info="posts"
                         :api="'posts'"/>
         </div>
@@ -45,6 +45,8 @@
             $route: function () {
                 if (this.$route.query.t) {
                     this.$store.dispatch('posts/getPostsOnTags', this)
+                } else {
+                    this.$store.dispatch('posts/getPublishedPosts', this)
                 }
             }
         },

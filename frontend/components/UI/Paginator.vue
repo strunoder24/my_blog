@@ -1,21 +1,21 @@
 <template>
     <div class="paginator">
         <md-button class="md-icon-button"
-                   :disabled="!info.previous"
+                   :disabled="!info.hasPrevPage"
                    @click="execute_pagination('previous')"
         >
             <md-icon>chevron_left</md-icon>
         </md-button>
-        <md-button :class="{'visited': page === info.current_page}"
+        <md-button :class="{'visited': page === info.page}"
                    class="md-icon-button"
-                   v-for="page in info.pages_count"
+                   v-for="page in info.totalPages"
                    :key="page"
-                   :disabled="page === info.current_page"
+                   :disabled="page === info.page"
                    @click="execute_pagination(page)">
             {{ page }}
         </md-button>
         <md-button class="md-icon-button"
-                   :disabled="!info.next"
+                   :disabled="!info.hasNextPage"
                    @click="execute_pagination('next')"
         >
             <md-icon>chevron_right</md-icon>
@@ -45,44 +45,16 @@
         methods: {
             execute_pagination(to){  //to: 'next', 'previous' or Number
                 if (this.api === 'posts') {
-                    if (typeof to === 'number') {
-                        const url = '/api/posts/' + `?p=${to}`;
-                        this.$store.dispatch('posts/getPostsOnPaginator', {context: this, url, page_number: to})
-                    } else {
-                        this.$store.dispatch('posts/getPostsOnPaginator', {
-                            context: this,
-                            url: this.info[to],
-                            page_number: to === 'next' ? this.info.current_page + 1 : this.info.current_page - 1
-                        })
-                    }
-                } else if (this.api === 'tags') {
-                    if (typeof to === 'number') {
-                        const url = `/api/tags/?p=${to}&is_admin=true`;
-                        this.$store.dispatch('tags/getTagsOnPaginator', {context: this, url, page_number: to})
-                    } else {
-                        this.$store.dispatch('tags/getTagsOnPaginator', {
-                            context: this,
-                            url: this.info[to],
-                            page_number: to === 'next' ? this.info.current_page + 1 : this.info.current_page - 1,
-                        })
-                    }
-                }
+                    let url = '/api/posts/';
+                    let page_number = 1;
+                    let tag = '';
 
-                else if (this.api === 'images') {
-                    if (typeof to === 'number') {
-                        const url = '/api/images/' + `?p=${to}`;
-                        this.$store.dispatch('posts/getImagesOnPaginator', {context: this, url, page_number: to});
-                        this.$emit('changePage', to)
-                    } else {
-                        this.$store.dispatch('posts/getImagesOnPaginator', {
-                            context: this,
-                            url: this.info[to],
-                            page_number: to === 'next' ? this.p + 1 : this.p - 1
-                        });
-                        this.$emit('changePage', to === 'next' ? this.p + 1 : this.p - 1)
-                    }
-                }
+                    if (typeof to === 'number') page_number = to;
+                    else page_number = to === 'next' ? this.info.page + 1 : this.info.page - 1;
+                    if (this.$route.query.t) tag = this.$route.query.t;
 
+                    this.$store.dispatch('posts/getPostsOnPaginator', {context: this, url, page_number, tag})
+                }
                 document.scrollTop = 0;
             }
         }
