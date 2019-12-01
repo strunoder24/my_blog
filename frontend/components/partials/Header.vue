@@ -16,6 +16,7 @@
 <!--                    ><md-icon>search</md-icon>-->
 <!--                </md-button>-->
             </div>
+            <UserPanel />
         </div>
         <div class="md-layout inner-layout" v-else>
             <md-button class="md-icon-button" @click="showNavigation = true">
@@ -51,7 +52,8 @@
 </template>
 
 <script>
-    import PopularTags from '~/components/partials/PopularTags.vue'
+    import PopularTags from '~c/partials/PopularTags.vue'
+    import UserPanel from '~c/UI/UserPanel.vue'
     import { mapState } from 'vuex'
 
     export default {
@@ -114,6 +116,7 @@
 
         components: {
             PopularTags,
+            UserPanel
         }
     }
 </script>

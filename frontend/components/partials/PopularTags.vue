@@ -30,6 +30,10 @@
             }
         },
 
+        created(){
+            this.$store.dispatch('tags/getTags', this);
+        },
+
         computed: {
             ...mapState({
                 tags: state => state.tags.tags

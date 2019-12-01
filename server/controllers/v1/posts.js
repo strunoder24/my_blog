@@ -35,13 +35,11 @@ const getPosts = async (req, res) => {
     let page = req.query.p;
     let tag = req.query.t;
     
-    console.log(tag);
-    
     if (is_published) mongoQuery.is_published = is_published;
     if (tag && tag.length !== 0) mongoQuery.tags = await findTagId(tag);
     
     Post.paginate(mongoQuery, {
-        limit: 2,
+        limit: 10,
         populate: ['main_image', 'tags'],
         page: page ? page : 1
     })

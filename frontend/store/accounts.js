@@ -22,5 +22,16 @@ export const actions = {
         } catch (e) {
             console.log(e);
         }
+    },
+    
+    logout({commit}, context) {
+        context.$axios.post('/auth/logout')
+            .then(() => {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+    
+                commit('setInfo', {});
+                context.$router.push('/')
+            })
     }
 };

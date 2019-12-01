@@ -40,7 +40,7 @@ module.exports = {
     // Скрипты исполняемые перед началом работы SPA
     plugins: [
         '~/plugins/global-components',
-        '~/plugins/vue-material',
+        '~/plugins/libs',
         '~/plugins/axios',
         '~/plugins/directives',
         '~/plugins/bus',

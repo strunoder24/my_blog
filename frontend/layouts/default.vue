@@ -20,6 +20,7 @@
     export default {
         created(){
             this.$bus.$on('setUserCredentials', this.setjwt);
+            this.$store.dispatch('accounts/getUserInfo', this);
         },
 
         computed: {
