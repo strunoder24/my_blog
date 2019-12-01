@@ -16,6 +16,7 @@
             Пароль:
           </InputComponent>
         </div>
+        <md-checkbox v-model="isSuperadmin" class="md-primary">Создать админа</md-checkbox>
       </md-card-content>
       <md-card-actions style="padding: 16px">
         <Button @click="submit">
@@ -31,13 +32,14 @@
         data(){
             return {
                 email: '',
-                password: ''
+                password: '',
+                isSuperadmin: false
             }
         },
 
         methods: {
             submit(){
-                this.$axios.post('/auth/signup/', {
+                this.$axios.post(`/auth/${this.isSuperadmin ? 'setup' : 'signup'}/`, {
                     email: this.email,
                     password: this.password
                 })

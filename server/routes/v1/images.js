@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { imageParser } = require('../../config');
 const Image = require('../../models/Image').Image;
-const { isLoggedUser } = require('../../controllers/auth');
+const { isLoggedUser, isAdmin } = require('../../controllers/auth');
 
 
-router.post('/images', isLoggedUser, imageParser.single('file'), (req, res) => {
+router.post('/images', isLoggedUser, isAdmin, imageParser.single('file'), (req, res) => {
     const image = {};
     image.original_url = req.file.url;
     image.public_id = req.file.public_id;

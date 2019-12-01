@@ -43,7 +43,9 @@
                 })
                     .then(r => {
                         this.$bus.$emit('setUserCredentials', { user: r.data.user, token: r.data.token});
-                        this.$store.commit('accounts/setInfo', r.data.user)
+                        this.$store.commit('accounts/setInfo', r.data.user);
+
+                        if (!r.data.user.isAdmin) this.$router.push('/')
                     })
                     .catch(e => {
                         console.log(e);

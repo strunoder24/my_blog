@@ -6,14 +6,12 @@ const config = require('../config');
 
 const { validationResult } = require('express-validator');
 
-const signup = (req, res) => {
+const setup = (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
     
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(404).json(errors.errors[0])
-    }
+    if (!errors.isEmpty()) return res.status(404).json(errors.errors[0]);
     
     User.findOne({}, (err, document) => {
         if (err) return res.send(err);
@@ -31,6 +29,33 @@ const signup = (req, res) => {
             });
         } else {
             return res.status(401).json({msg: 'Admin is already exist. GTFO'})
+        }
+    });
+};
+
+const signup = (req, res) => {
+    let email = req.body.email;
+    let password = req.body.password;
+    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(404).json(errors.errors[0]);
+    
+    User.findOne({email}, (err, document) => {
+        if (err) return res.send(err);
+        
+        if (document === null) {
+            User.create({
+                email,
+                password: bcrypt.hashSync(password, 8),
+                isAdmin: false
+            }, (err, user) => {
+                if (err) return res.status(400).json(err);
+                
+                let token = jwt.sign({id: user._id}, config.secret, {expiresIn: 86400});
+                res.json({auth: true, token, user: {email, isAdmin: user.isAdmin}})
+            });
+        } else {
+            return res.status(409).json({msg: 'User with that email is already exist'})
         }
     });
 };
@@ -96,12 +121,34 @@ isLoggedUser = async (req, res, next) => {
         if (isAtBlacklist) return res.status(401).json(isAtBlacklist);
         
         next()
-    });};
+    })};
+
+isAdmin = async (req, res, next) => {
+    let token = req.headers.token;
+    let user = jwt.decode(token);
+    
+    User.findById(user.id)
+        .then(user => {
+            if (user.isAdmin) {
+                next()
+            } else {
+                res.status(401).json({
+                    status: "DENIED",
+                    msg: 'You are not an admin'
+                })
+            }
+        })
+        .catch(e => {
+            console.log(e);
+        })
+};
 
 module.exports = {
+    setup,
     signup,
     signin,
     logout,
     userInfo,
-    isLoggedUser
+    isLoggedUser,
+    isAdmin
 };

@@ -14,8 +14,6 @@ const checkForBlacklist = async (token) => {
     let status = {};
     
     await TokenBL.find({token}, (err, tok) => {
-        console.log(tok);
-        
         if (err) {
             status = {
                 status: 'ERROR',

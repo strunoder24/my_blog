@@ -2,7 +2,7 @@
     <div v-if="renderGranted"
          class="admin-wrapper main-container md-layout"
          style="flex: 1">
-        <login v-if="Object.keys(user).length === 0"></login>
+        <login v-if="Object.keys(user).length === 0 || !user.isAdmin"></login>
         <section class="admin-container" v-else>
             <ButtonsPanel />
             <PostsList :posts="posts.docs" />
