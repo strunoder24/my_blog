@@ -44,6 +44,7 @@ module.exports = {
         '~/plugins/axios',
         '~/plugins/directives',
         '~/plugins/bus',
+        {src: '~/plugins/io', ssr: false}
     ],
     
     axios: {

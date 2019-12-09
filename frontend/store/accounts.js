@@ -11,14 +11,16 @@ export const mutations = {
 export const actions = {
     async getUserInfo({ commit }, context) {
         try {
-            let token = localStorage.getItem('token');
-            
-            const response = await context.$axios.get('/auth/user-info/', {
-                headers: {
-                    "token": token
-                }
-            });
-            commit('setInfo', response.data);
+            if (process.client) {
+                let token = localStorage.getItem('token');
+    
+                const response = await context.$axios.get('/auth/user-info/', {
+                    headers: {
+                        "token": token
+                    }
+                });
+                commit('setInfo', response.data);
+            }
         } catch (e) {
             console.log(e);
         }

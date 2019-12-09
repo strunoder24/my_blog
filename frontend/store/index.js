@@ -1,8 +1,6 @@
-export const state = () => {
-    return {
-        searchEnabled: false
-    }
-};
+export const state = () => ({
+    searchEnabled: false
+});
 
 export const mutations = {
     toggleSearchPanel(state, status) {
